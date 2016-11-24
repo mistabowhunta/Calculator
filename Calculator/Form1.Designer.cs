@@ -63,7 +63,6 @@
             this.rtbTop.Location = new System.Drawing.Point(12, 12);
             this.rtbTop.Name = "rtbTop";
             this.rtbTop.ReadOnly = true;
-            this.rtbTop.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.rtbTop.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbTop.Size = new System.Drawing.Size(337, 57);
             this.rtbTop.TabIndex = 3;

@@ -13,8 +13,9 @@ namespace Calculator
 {
     public partial class Form1 : Form
     {
-        //Variable for storing Buttons object and _button name is private b/c won't need it anywhere else
+        //MANUALLY ASSIGNING VARIABLEVariable for storing Buttons object and _button name is private b/c won't need it anywhere else
         //MANUALLY ASSIGNING VARIABLE private Buttons _button;
+        //Creating list to store all user's numbers to perform calculations
         public List<int> iList = new List<int>();
         public Form1()
         {
@@ -31,6 +32,12 @@ namespace Calculator
             //MANUALLY ASSIGNING VARIABLE _button.Numbers = 10;
             //Getting values of the properties from the button object and assigning to the rich text box on screen
 
+            //Setting text alignment for top display to right
+            rtbTop.SelectionAlignment = HorizontalAlignment.Right;
+            //Setting text alignment for left and right displays to center
+            rtbLeft.SelectionAlignment = HorizontalAlignment.Center;
+            rtbRight.SelectionAlignment = HorizontalAlignment.Center;
+            //Setting all displays to default zero value
             rtbTop.Text = button.Numbers.ToString();
             rtbLeft.Text = button.Numbers.ToString();
             rtbRight.Text = button.Numbers.ToString();
@@ -46,18 +53,19 @@ namespace Calculator
                 rtbRight.Text = "";
             }
         }
-
-        //ALL BUTTON EVENT BELOW
+       
+        //ALL BUTTON EVENTS BELOW
+            //THESE ARE THE NUMBERS
         private void btnZero_Click(object sender, EventArgs e)
         {
             //Creating new object by passing 0 and adding that number to list in Buttons class
             Buttons button = new Buttons(0);
             RemoveZero();
             iList.Add(0);
-            //foreach (int element in iList)
-            //{
-            //    MessageBox.Show(element.ToString());
-            //}
+            foreach (int element in iList)
+            {
+                MessageBox.Show(element.ToString());
+            }
             //Converting entire list into a string then displaying in rich text box
             //string newList = string.Join("", iList);
             //In order to keep adding integers, need to use += NOT just =
@@ -155,8 +163,38 @@ namespace Calculator
             rtbRight.Text += button.Numbers + "\n";
         }
 
+            //THESE ARE THE OPERATORS/CHARACTERS
         private void btnPeriod_Click(object sender, EventArgs e)
         {
+            if (iList[0] == 0)
+            {
+                //In case user needs a fractional number, changing default zero in list to period so it will correctly calcalate in the future
+                iList[0] = '.';
+                //Clearing all screens to enter "0."
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+
+                rtbTop.Text += "0.";
+                rtbLeft.Text += "0" + "\n";
+                rtbLeft.Text += "." + "\n";
+                rtbRight.Text += "0" + "\n";
+                rtbRight.Text += "." + "\n";
+            }
+           else if(iList.Contains('.'))
+            {
+                //Returning nothing basically so if user enters more than one period it will not display to screens or add to lists
+                return;
+            }
+            else
+            {
+                //If there are no periods in list, add one
+                Buttons button = new Buttons('.');
+                iList.Add('.');
+                rtbTop.Text += button.Operators;
+                rtbLeft.Text += button.Operators + "\n";
+                rtbRight.Text += button.Operators + "\n";
+            }
             
         }
 
@@ -165,28 +203,98 @@ namespace Calculator
 
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private async void btnAdd_Click(object sender, EventArgs e)
         {
-
+            Buttons button = new Buttons('+');
+            //Adding operator to list so can calculate correctly in future
+            iList.Add('+');
+            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+            rtbTop.Text += " " + button.Operators + " ";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                rtbLeft.Text += button.Operators + "\n";
+                rtbRight.Text += button.Operators + "\n";
+                await Task.Delay(200); //Cool trick here
+            }
         }
 
-        private void btnSubtract_Click(object sender, EventArgs e)
+        private async void btnSubtract_Click(object sender, EventArgs e)
         {
-
+            Buttons button = new Buttons('-');
+            //Adding operator to list so can calculate correctly in future
+            iList.Add('-');
+            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+            rtbTop.Text += " " + button.Operators + " ";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                rtbLeft.Text += button.Operators + "\n";
+                rtbRight.Text += button.Operators + "\n";
+                await Task.Delay(200); //Cool trick here
+            }
         }
 
-        private void btnMultiply_Click(object sender, EventArgs e)
+        private async void btnMultiply_Click(object sender, EventArgs e)
         {
-
+            Buttons button = new Buttons('*');
+            //Adding operator to list so can calculate correctly in future
+            iList.Add('*');
+            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+            rtbTop.Text += " " + button.Operators + " ";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                rtbLeft.Text += button.Operators + "\n";
+                rtbRight.Text += button.Operators + "\n";
+                await Task.Delay(200); //Cool trick here
+            }
         }
 
-        private void btnDivide_Click(object sender, EventArgs e)
+        private async void btnDivide_Click(object sender, EventArgs e)
         {
-
+            Buttons button = new Buttons('/');
+            //Adding operator to list so can calculate correctly in future
+            iList.Add('/');
+            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+            rtbTop.Text += " " + button.Operators + " ";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                rtbLeft.Text += button.Operators + "\n";
+                rtbRight.Text += button.Operators + "\n";
+                await Task.Delay(200); //Cool trick here
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            //Finding how many indexes are in numbers list, then deleting the last index then displaying list on screen
+            int i = (iList.Count) - 1;//minusing 1 to get correct index
+            iList.RemoveAt(i);
+            //Clearing screens
+            rtbTop.Text = "";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            foreach (int element in iList)
+            {
+                //Keeping tabs of what index the loop is at so can change char string value into 
+                i = 0;
+                i++;
+                if (element == 46)
+                {
+                    iList[i] = '.';
+                    //Convert.ToChar(element);
+                }
+                
+                rtbTop.Text += element.ToString();
+                rtbLeft.Text += element.ToString() + "\n";
+                rtbRight.Text += element.ToString() + "\n";
+            }
 
         }
 
@@ -207,7 +315,22 @@ namespace Calculator
 
         private void btnClearAll_Click(object sender, EventArgs e)
         {
-
+            //Clearing text from all screens and removing all elements in all lists
+            rtbBottom.Text = "";
+            rtbTop.Text = "";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            iList.Clear();
+            //ISAAC CLEAR ALL FUTURE LISTS HERE
+            //Adding 0 back to first index so screens output the default zero. Also if list has nothing it will error when enter RemoveZero method
+            iList.Add(0);
+            rtbTop.Text += iList[0];
+            rtbLeft.Text += iList[0] + "\n";
+            rtbRight.Text += iList[0] + "\n";
         }
     } //Form1 bracket
 } //namespace bracket
+  ///NOTES
+/////Converting entire list into a string then displaying in rich text box
+//      string newList = string.Join("", iList);
+//In order to keep adding integers to displays, need to use += NOT just =
