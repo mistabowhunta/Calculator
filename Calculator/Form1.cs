@@ -15,8 +15,11 @@ namespace Calculator
     {
         //MANUALLY ASSIGNING VARIABLEVariable for storing Buttons object and _button name is private b/c won't need it anywhere else
         //MANUALLY ASSIGNING VARIABLE private Buttons _button;
-        //Creating list to store all user's numbers to perform calculations
+        //Creating list to store all user's numbers and characters to perform calculations. Need to make it an object list to accept different dataypes
         public List<int> iList = new List<int>();
+        public List<int> iResList = new List<int>();
+        public List<string> sList = new List<string>();
+        public List<char> chList = new List<char>();
         public Form1()
         {
             //Constructor for form
@@ -76,31 +79,43 @@ namespace Calculator
         }
         private void btnOne_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(1);
-            RemoveZero();
-            iList.Add(1);
-            rtbTop.Text += button.Numbers;
-            rtbLeft.Text += button.Numbers + "\n";
-            rtbRight.Text += button.Numbers + "\n";
+            //Buttons button = new Buttons(1);
+            //RemoveZero();
+            //iList.Add(1);
+            Buttons button = new Buttons("+");
+            sList.Add("+");
+            rtbTop.Text += button.Strings;
+            
+            //rtbTop.Text += button.Numbers;
+            //rtbLeft.Text += button.Numbers + "\n";
+            //rtbRight.Text += button.Numbers + "\n";
         }
         private void btnTwo_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(2);
-            RemoveZero();
-            iList.Add(2);
-            rtbTop.Text += button.Numbers;
-            rtbLeft.Text += button.Numbers + "\n";
-            rtbRight.Text += button.Numbers + "\n";
+            //Buttons button = new Buttons(2);
+            //RemoveZero();
+            //iList.Add(2);
+            Buttons button = new Buttons("2");
+            sList.Add("2");
+            rtbTop.Text += button.Strings;
+
+            //rtbTop.Text += button.Numbers;
+            //rtbLeft.Text += button.Numbers + "\n";
+            //rtbRight.Text += button.Numbers + "\n";
         }
 
         private void btnThree_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(3);
-            RemoveZero();
-            iList.Add(3);
-            rtbTop.Text += button.Numbers;
-            rtbLeft.Text += button.Numbers + "\n";
-            rtbRight.Text += button.Numbers + "\n";
+            //Buttons button = new Buttons(3);
+            //RemoveZero();
+            //iList.Add(3);
+            Buttons button = new Buttons("3");
+            sList.Add("3");
+            rtbTop.Text += button.Strings;
+
+            //rtbTop.Text += button.Numbers;
+            //rtbLeft.Text += button.Numbers + "\n";
+            //rtbRight.Text += button.Numbers + "\n";
         }
 
         private void btnFour_Click(object sender, EventArgs e)
@@ -116,7 +131,7 @@ namespace Calculator
         private void btnFive_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(5);
-            RemoveZero();
+            //RemoveZero();
             iList.Add(5);
             rtbTop.Text += button.Numbers;
             rtbLeft.Text += button.Numbers + "\n";
@@ -146,7 +161,7 @@ namespace Calculator
         private void btnEight_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(8);
-            RemoveZero();
+            //RemoveZero();
             iList.Add(8);
             rtbTop.Text += button.Numbers;
             rtbLeft.Text += button.Numbers + "\n";
@@ -200,6 +215,25 @@ namespace Calculator
 
         private void btnEquals_Click(object sender, EventArgs e)
         {
+            string strNewList = string.Join("", iList);
+            int intNewVar = Convert.ToInt32(strNewList);
+            iResList.Add(intNewVar);
+
+            foreach (char element in chList)
+            {
+                
+                int i = 1;
+                int intResult;
+                if (element == '+')
+                {
+                    intResult = iResList[0] + iResList[i];
+                    rtbTop.Text = intResult.ToString();
+                    iResList[0] = intResult;
+                    i++;
+                }
+                
+            }
+            
 
         }
 
@@ -207,11 +241,20 @@ namespace Calculator
         {
             Buttons button = new Buttons('+');
             //Adding operator to list so can calculate correctly in future
-            iList.Add('+');
+            //iList.Add('+');
             //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
             rtbTop.Text += " " + button.Operators + " ";
             rtbLeft.Text = "";
             rtbRight.Text = "";
+            string strNewList = string.Join("", iList);
+            int intNewVar = Convert.ToInt32(strNewList);
+            //newIntVar = newIntVar + 1;
+            //rtbTop.Text += intNewVar.ToString();
+            iResList.Add (intNewVar);
+            chList.Add('+');
+            iList.Clear();
+
+
             for (int i = 1; i <= 10; i++)
             {
                 rtbLeft.Text += button.Operators + "\n";
@@ -283,7 +326,7 @@ namespace Calculator
             foreach (int element in iList)
             {
                 //Keeping tabs of what index the loop is at so can change char string value into 
-                i = 0;
+                i = 1;
                 i++;
                 if (element == 46)
                 {
@@ -321,6 +364,7 @@ namespace Calculator
             rtbLeft.Text = "";
             rtbRight.Text = "";
             iList.Clear();
+            iResList.Clear();
             //ISAAC CLEAR ALL FUTURE LISTS HERE
             //Adding 0 back to first index so screens output the default zero. Also if list has nothing it will error when enter RemoveZero method
             iList.Add(0);
