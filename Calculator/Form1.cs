@@ -20,6 +20,8 @@ namespace Calculator
         public List<int> iResList = new List<int>();
         public List<string> sList = new List<string>();
         public List<char> chList = new List<char>();
+        public int i = 0;
+        public int j = 1;
         public Form1()
         {
             //Constructor for form
@@ -218,21 +220,36 @@ namespace Calculator
             string strNewList = string.Join("", iList);
             int intNewVar = Convert.ToInt32(strNewList);
             iResList.Add(intNewVar);
+            int i = 0;
+            int j = 1;
 
             foreach (char element in chList)
             {
+                int intResult = 0;
                 
-                int i = 1;
-                int intResult;
                 if (element == '+')
                 {
-                    intResult = iResList[0] + iResList[i];
-                    rtbTop.Text = intResult.ToString();
-                    iResList[0] = intResult;
-                    i++;
+                    if (i == 0)
+                    {
+                        intResult = iResList[i] + iResList[j];
+                        rtbTop.Text = intResult.ToString();
+                        i=i+2;
+                        j=j+2;
+                    }
+                    else
+                    {
+                        intResult = intResult + iResList[j];
+                        rtbTop.Text = intResult.ToString();
+                        j++;
+                    }
+                  
+
                 }
-                
+                iList.Clear();
+                iList.Add(intResult);
+           
             }
+           
             
 
         }
