@@ -99,7 +99,7 @@
             // rtbBottom
             // 
             this.rtbBottom.BackColor = System.Drawing.SystemColors.MenuText;
-            this.rtbBottom.Font = new System.Drawing.Font("Modern No. 20", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbBottom.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbBottom.ForeColor = System.Drawing.Color.Blue;
             this.rtbBottom.Location = new System.Drawing.Point(12, 380);
             this.rtbBottom.Name = "rtbBottom";
