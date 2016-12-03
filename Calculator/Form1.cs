@@ -258,15 +258,24 @@ namespace Calculator
             rtbTop.Text += " " + button.Operators + " ";
             rtbLeft.Text = "";
             rtbRight.Text = "";
-            //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
-            string strNewList = string.Join("", iList);
-            int intNewVar = Convert.ToInt32(strNewList);
-            iResList.Add(intNewVar);
-            //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-            chList.Add('-');
-            //Clearing iList so user can enter the second, third, fourth numbers
-            iList.Clear();
 
+            //If there is nothing in temporary iList, do not need to add any integers to iResList
+            if (iList.Count == 0)
+            {
+                chList.Add('-');
+            }
+            else
+            {
+                //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
+                string strNewList = string.Join("", iList);
+                int intNewVar = Convert.ToInt32(strNewList);
+                iResList.Add(intNewVar);
+                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
+                chList.Add('-');
+                //Clearing iList so user can enter the second, third, fourth numbers
+                iList.Clear();
+            }
+          
             //Loop that displays operator user clicked on side displays
             for (int i = 1; i <= 10; i++)
             {
@@ -340,17 +349,15 @@ namespace Calculator
                 foreach (int element in iResList)
                 {
                     rtbTop.Text += element.ToString();
-                    if (chList.Count > 0)
+                    if (chList.Count > 1)
                     {
                         rtbTop.Text += " " + chList[intAddCh] + " ";
                         intAddCh++;
                     }
                 }
-                iList.Add(iResList[0]);
-
             }
             //Checking if any operators were clicked, if so need to display all numbers and operators. Not just the temporary iList
-            if (chList.Count > 0)
+            else if (chList.Count > 0)
             {
                 //Finding how many indexes are in numbers list, then deleting the last index
                 int i = (iList.Count) - 1;//minusing 1 to get correct index
