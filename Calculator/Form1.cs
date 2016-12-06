@@ -361,6 +361,21 @@ namespace Calculator
                     }
                 }
             }
+            else if (iList.Count > 1)
+            {
+                //Finding how many indexes are in numbers list, then deleting the last index
+                int i = (iList.Count) - 1;//minusing 1 to get correct index
+                iList.RemoveAt(i);
+                //Clearing screens
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+                //Looping through iList to display all integers back on display
+                foreach (int element in iList)
+                {
+                    rtbTop.Text += element.ToString();
+                }
+            }
             //Checking if any operators were clicked, if so need to display all numbers and operators. Not just the temporary iList
             else if (chList.Count > 0)
             {
@@ -379,21 +394,6 @@ namespace Calculator
                     intAddChar++;
                 }
                 //After iResList and operations are added this loop adds the temporary list user recently entered that was not captured in iResList
-                foreach (int element in iList)
-                {
-                    rtbTop.Text += element.ToString();
-                }
-            }
-            else if (iList.Count > 1)
-            {
-                //Finding how many indexes are in numbers list, then deleting the last index
-                int i = (iList.Count) - 1;//minusing 1 to get correct index
-                iList.RemoveAt(i);
-                //Clearing screens
-                rtbTop.Text = "";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-                //Looping through iList to display all integers back on display
                 foreach (int element in iList)
                 {
                     rtbTop.Text += element.ToString();
