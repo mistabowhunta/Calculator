@@ -337,8 +337,13 @@ namespace Calculator
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            //In case the user presses backspace right after entering an operation, need to remove only the operation character and re-display all numbers
-            if (iList.Count == 0)
+            //If no operations were clicked and there are no numbers displayed, it simply clears the screen. Need this or will throw error.
+            if (iList.Count == 0  && chList.Count == 0)
+            {
+                //Clearing screen
+                rtbTop.Text = "";
+            }
+            else if (iList.Count == 0)
             {
                 int intCount = (chList.Count) - 1;
                 chList.RemoveAt(intCount);
