@@ -161,7 +161,6 @@ namespace Calculator
             iResList.Add(intNewVar);
             int intListTracker = 1, intResult = 0;
             
-
             foreach (char element in chList)
             {
   
@@ -337,70 +336,136 @@ namespace Calculator
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            //If no operations were clicked and there are no numbers displayed, it simply clears the screen. Need this or will throw error.
-            if (iList.Count == 0  && chList.Count == 0)
-            {
-                //Clearing screen
-                rtbTop.Text = "";
-            }
-            else if (iList.Count == 0)
-            {
-                int intCount = (chList.Count) - 1;
-                chList.RemoveAt(intCount);
-                //Clearing screen
-                rtbTop.Text = "";
 
-                int intAddCh = 0;
-                foreach (int element in iResList)
+            if (chList.Count > 0)
+            {
+                if (iList.Count > 0)
                 {
-                    rtbTop.Text += element.ToString();
-                    if (chList.Count > 1)
+                    //Finding how many indexes are in numbers list, then deleting the last index
+                    int i = (iList.Count) - 1;//minusing 1 to get correct index
+                    iList.RemoveAt(i);
+                    //Clearing screens
+                    rtbTop.Text = "";
+                    rtbLeft.Text = "";
+                    rtbRight.Text = "";
+                    // Looping through iResList and charlist to enter all numbers and characters (operations) user previously entered
+                    int intAddCh = 0, intStop = (iResList.Count), intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in iResList
+                    foreach (int element in iResList)
                     {
-                        rtbTop.Text += " " + chList[intAddCh] + " ";
-                        intAddCh++;
+                        rtbTop.Text += element.ToString();
+                        if (intCurrentIndex == intStop)
+                        {
+                            ; //do nothing here as there are no more characters to add becuase the last number was added to display and chList is empty
+                        }
+                        else //(intCurrentIndex != intStop)
+                        {
+                            rtbTop.Text += " " + chList[intAddCh] + " ";
+                            intAddCh++;
+                            intCurrentIndex++;
+                        }  
+                    }
+                    //Looping through iList to display all integers back on display less the integer user wanted removed
+                    foreach (int element in iList)
+                    {
+                        rtbTop.Text += element.ToString();
+                    }
+
+                }
+                else // (iList.Count <= 0)
+                {
+                    //Finding how many indexes are in character list, then deleting the last index
+                    int i = (chList.Count) - 1;
+                    chList.RemoveAt(i);
+                    //write something
+                    if (chList.Count == 0)
+                    {
+                        //Clearing screen
+                        rtbTop.Text = "";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+                        //Redisplaying all numbers user entered 
+                        foreach(int element in iResList)
+                        {
+                            rtbTop.Text += element.ToString();
+                        }
+                        //Converting the last iResList number into iList (user's temporary numbers). Need this in case user adds or deletes more numbers
+                        int j = (iResList.Count) - 1;//minusing 1 to get correct index
+                        //Converting last number in iResList to a string so can go through each character to add each individual to iList
+                        string strNewList = Convert.ToString(iResList[j]);
+                        foreach (char element in strNewList)
+                        {
+                            string strNewVar = element.ToString();
+                            int intNewVar = Convert.ToInt32(strNewVar);
+                            iList.Add(intNewVar);
+                        }
+                        //Removing last number in iResList as just added it to iList
+                        iResList.RemoveAt(j);
+                    }
+                    else //(chList.Count > 0)
+                    {
+                        //Clearing screen
+                        rtbTop.Text = "";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+                        //Redisplaying all numbers in iResList and all characters user previously entered less the last character (operator)
+                        int intAddCh = 0, intStop = (iResList.Count) - 1, intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in iResList
+                        foreach (int element in iResList)
+                        {
+                            rtbTop.Text += element.ToString();
+                            if (intCurrentIndex == intStop)
+                            {
+                                ; //do nothing here as there are no more characters to add becuase the last number was added to display and chList is empty
+                            }
+                            else //(intCurrentIndex != intStop)
+                            {
+                                rtbTop.Text += " " + chList[intAddCh] + " ";
+                                intAddCh++;
+                                intCurrentIndex++;
+                            }
+                        }
+                        //Converting the last iResList number into iList (user's temporary numbers). Need this in case user adds or deletes more numbers
+                        int j = (iResList.Count) - 1;//minusing 1 to get correct index
+                        //Converting last number in iResList to a string so can go through each character to add each individual to iList
+                        string strNewList = Convert.ToString(iResList[j]);
+                        foreach(char element in strNewList)
+                        {
+                            string strNewVar = element.ToString();
+                            int intNewVar = Convert.ToInt32(strNewVar);
+                            iList.Add(intNewVar);
+                        }
+                        //Removing last number in iResList as just added it to iList
+                        iResList.RemoveAt(j);
+                       
                     }
                 }
-            }
-            else if (iList.Count > 1)
+            } 
+            else // if (chList.Count <= 0)
             {
-                //Finding how many indexes are in numbers list, then deleting the last index
-                int i = (iList.Count) - 1;//minusing 1 to get correct index
-                iList.RemoveAt(i);
-                //Clearing screens
-                rtbTop.Text = "";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-                //Looping through iList to display all integers back on display
-                foreach (int element in iList)
+                if (iList.Count > 0)
                 {
-                    rtbTop.Text += element.ToString();
+                    //Finding how many indexes are in numbers list, then deleting the last index
+                    int i = (iList.Count) - 1;//minusing 1 to get correct index
+                    iList.RemoveAt(i);
+                    //Clearing screens
+                    rtbTop.Text = "";
+                    rtbLeft.Text = "";
+                    rtbRight.Text = "";
+                    //Looping through iList to display all integers back on display less the integer user wanted removed
+                    foreach (int element in iList)
+                    {
+                        rtbTop.Text += element.ToString();
+                    }
+                }
+                else // if (iList.Count < = 0)
+                {
+                    //Clearing screens
+                    rtbTop.Text = "";
+                    rtbLeft.Text = "";
+                    rtbRight.Text = "";
                 }
             }
-            //Checking if any operators were clicked, if so need to display all numbers and operators. Not just the temporary iList
-            else if (chList.Count > 0)
-            {
-                //Finding how many indexes are in numbers list, then deleting the last index
-                int i = (iList.Count) - 1;//minusing 1 to get correct index
-                iList.RemoveAt(i);
-                //Clearing screens
-                rtbTop.Text = "";
-
-                //Displaying all numbers in iResList and adding character operations in order the user entered them. {12,1,13,5} {+,-,+} = 12+1-13+5
-                int intAddChar = 0;
-                foreach (int element in iResList)
-                {
-                    rtbTop.Text += element.ToString();
-                    rtbTop.Text += " " + chList[intAddChar] + " ";
-                    intAddChar++;
-                }
-                //After iResList and operations are added this loop adds the temporary list user recently entered that was not captured in iResList
-                foreach (int element in iList)
-                {
-                    rtbTop.Text += element.ToString();
-                }
-            }
-        }
-
+        } // backspace end
+         
         private void btnNegative_Click(object sender, EventArgs e)
         {
 
