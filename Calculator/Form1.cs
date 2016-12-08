@@ -235,7 +235,8 @@ namespace Calculator
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
-            //Need to add numbers before operator otherwise this if loop will enter nothing until user selects a number
+            Buttons button = new Buttons('+');
+            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
@@ -245,7 +246,12 @@ namespace Calculator
             }
             else // All 3 lists count do not equal 0, resume as normal
             {
-                Buttons button = new Buttons('+');
+                //If statement prevents user from entering double characters (operators) in a row
+                if ((chList.Count >= 1) && (iList.Count == 0) && (iResList.Count > 0))
+                {
+                    int intCountIndexes = chList.Count - 1;
+                }
+               
                 //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
@@ -305,7 +311,7 @@ namespace Calculator
 
         private async void btnMultiply_Click(object sender, EventArgs e)
         {
-            //Need to add numbers before operator otherwise this if loop will enter nothing until user selects a number
+            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
@@ -341,7 +347,7 @@ namespace Calculator
 
         private async void btnDivide_Click(object sender, EventArgs e)
         {
-            //Need to add numbers before operator otherwise this if loop will enter nothing until user selects a number
+            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
