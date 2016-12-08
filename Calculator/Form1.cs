@@ -220,33 +220,52 @@ namespace Calculator
             iList.Clear();
             chList.Clear();
             iResList.Clear();
-            iList.Add(intResult);
             rtbTop.Text = intResult.ToString();
             rtbBottom.Text = intResult.ToString();
+            //Adding intResult to iList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
+            //Converting intResult to a string so can go through each character to add each individual to iList
+            string strTempList= Convert.ToString(intResult);
+            foreach (char element in strTempList)
+            {
+                string strNewVar = element.ToString();
+                int intTempInt = Convert.ToInt32(strNewVar);
+                iList.Add(intTempInt);
+            }
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons('+');
-            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-            rtbTop.Text += " " + button.Operators + " ";
-            rtbLeft.Text = "";
-            rtbRight.Text = "";
-            //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
-            string strNewList = string.Join("", iList);
-            int intNewVar = Convert.ToInt32(strNewList);
-            iResList.Add (intNewVar);
-            //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-            chList.Add('+');
-            //Clearing iList so user can enter the second, third, fourth numbers
-            iList.Clear();
-           
-            //Loop that displays operator user clicked on side displays
-            for (int i = 1; i <= 10; i++)
+            //Need to add numbers before operator otherwise this if loop will enter nothing until user selects a number
+            if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
-                rtbLeft.Text += button.Operators + "\n";
-                rtbRight.Text += button.Operators + "\n";
-                await Task.Delay(75); //Cool trick here
+                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+            }
+            else // All 3 lists count do not equal 0, resume as normal
+            {
+                Buttons button = new Buttons('+');
+                //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                rtbTop.Text += " " + button.Operators + " ";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+                //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
+                string strNewList = string.Join("", iList);
+                int intNewVar = Convert.ToInt32(strNewList);
+                iResList.Add(intNewVar);
+                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
+                chList.Add('+');
+                //Clearing iList so user can enter the second, third, fourth numbers
+                iList.Clear();
+
+                //Loop that displays operator user clicked on side displays
+                for (int i = 1; i <= 10; i++)
+                {
+                    rtbLeft.Text += button.Operators + "\n";
+                    rtbRight.Text += button.Operators + "\n";
+                    await Task.Delay(60); //Cool trick here
+                }
             }
         }
 
@@ -280,57 +299,79 @@ namespace Calculator
             {
                 rtbLeft.Text += button.Operators + "\n";
                 rtbRight.Text += button.Operators + "\n";
-                await Task.Delay(75); //Cool trick here
+                await Task.Delay(60); //Cool trick here
             }
         }
 
         private async void btnMultiply_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons('*');
-            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-            rtbTop.Text += " " + button.Operators + " ";
-            rtbLeft.Text = "";
-            rtbRight.Text = "";
-            //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
-            string strNewList = string.Join("", iList);
-            int intNewVar = Convert.ToInt32(strNewList);
-            iResList.Add(intNewVar);
-            //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-            chList.Add('*');
-            //Clearing iList so user can enter the second, third, fourth numbers
-            iList.Clear();
-
-            //Loop that displays operator user clicked on side displays
-            for (int i = 1; i <= 10; i++)
+            //Need to add numbers before operator otherwise this if loop will enter nothing until user selects a number
+            if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
-                rtbLeft.Text += button.Operators + "\n";
-                rtbRight.Text += button.Operators + "\n";
-                await Task.Delay(75); //Cool trick here
+                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+            }
+            else // All 3 lists count do not equal 0, resume as normal
+            {
+                Buttons button = new Buttons('*');
+                //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                rtbTop.Text += " " + button.Operators + " ";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+                //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
+                string strNewList = string.Join("", iList);
+                int intNewVar = Convert.ToInt32(strNewList);
+                iResList.Add(intNewVar);
+                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
+                chList.Add('*');
+                //Clearing iList so user can enter the second, third, fourth numbers
+                iList.Clear();
+
+                //Loop that displays operator user clicked on side displays
+                for (int i = 1; i <= 10; i++)
+                {
+                    rtbLeft.Text += button.Operators + "\n";
+                    rtbRight.Text += button.Operators + "\n";
+                    await Task.Delay(60); //Cool trick here
+                }
             }
         }
 
         private async void btnDivide_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons('/');
-            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-            rtbTop.Text += " " + button.Operators + " ";
-            rtbLeft.Text = "";
-            rtbRight.Text = "";
-            //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
-            string strNewList = string.Join("", iList);
-            int intNewVar = Convert.ToInt32(strNewList);
-            iResList.Add(intNewVar);
-            //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-            chList.Add('/');
-            //Clearing iList so user can enter the second, third, fourth numbers
-            iList.Clear();
-
-            //Loop that displays operator user clicked on side displays
-            for (int i = 1; i <= 10; i++)
+            //Need to add numbers before operator otherwise this if loop will enter nothing until user selects a number
+            if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
-                rtbLeft.Text += button.Operators + "\n";
-                rtbRight.Text += button.Operators + "\n";
-                await Task.Delay(75); //Cool trick here
+                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+            }
+            else // All 3 lists count do not equal 0, resume as normal
+            {
+                Buttons button = new Buttons('/');
+                //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                rtbTop.Text += " " + button.Operators + " ";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+                //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
+                string strNewList = string.Join("", iList);
+                int intNewVar = Convert.ToInt32(strNewList);
+                iResList.Add(intNewVar);
+                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
+                chList.Add('/');
+                //Clearing iList so user can enter the second, third, fourth numbers
+                iList.Clear();
+
+                //Loop that displays operator user clicked on side displays
+                for (int i = 1; i <= 10; i++)
+                {
+                    rtbLeft.Text += button.Operators + "\n";
+                    rtbRight.Text += button.Operators + "\n";
+                    await Task.Delay(60); //Cool trick here
+                }
             }
         }
 
@@ -348,7 +389,7 @@ namespace Calculator
                     rtbTop.Text = "";
                     rtbLeft.Text = "";
                     rtbRight.Text = "";
-                    // Looping through iResList and charlist to enter all numbers and characters (operations) user previously entered
+                    // Looping through iResList and chList to enter all numbers and characters (operations) user previously entered
                     int intAddCh = 0, intStop = (iResList.Count), intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in iResList
                     foreach (int element in iResList)
                     {
