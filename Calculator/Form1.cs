@@ -19,8 +19,8 @@ namespace Calculator
         public List<int> iList = new List<int>();
         public List<int> iResList = new List<int>();
         public List<char> chList = new List<char>();
-        public int i = 0;
-        public int j = 1;
+        public List<char> chDoubleCharCheckList = new List<char>();
+        public int intGlobalButtonTracker = 0;
         public Form1()
         {
             //Constructor for form
@@ -87,6 +87,7 @@ namespace Calculator
         private void btnFive_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(5);
+            intGlobalButtonTracker++;
             iList.Add(5);
             rtbTop.Text += button.Numbers;
         }
@@ -236,6 +237,8 @@ namespace Calculator
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('+');
+            //intGlobalButtonTracker++;
+            //chDoubleCharCheckList.Insert(intGlobalButtonTracker, button.Operators);
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
@@ -246,11 +249,24 @@ namespace Calculator
             }
             else // All 3 lists count do not equal 0, resume as normal
             {
-                //If statement prevents user from entering double characters (operators) in a row
-                if ((chList.Count >= 1) && (iList.Count == 0) && (iResList.Count > 0))
-                {
-                    int intCountIndexes = chList.Count - 1;
-                }
+                //Foreach loop prevents user from entering double characters (operators) in a row
+                //try
+                //{
+                //    int intIndexCount = 0;
+                //    foreach (char element in chDoubleCharCheckList)
+                //    {
+                //        if (chDoubleCharCheckList[intIndexCount] == chDoubleCharCheckList[intIndexCount + 1])
+                //        {
+                //            chDoubleCharCheckList.RemoveAt(intIndexCount + 1);
+                //            goto Label;
+                //        }
+                //        intIndexCount++;
+                //    }
+                //}
+                //catch (Exception)
+                //{
+                //    ;
+                //}
                
                 //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
                 rtbTop.Text += " " + button.Operators + " ";
@@ -273,6 +289,7 @@ namespace Calculator
                     await Task.Delay(60); //Cool trick here
                 }
             }
+        Label:;
         }
 
         private async void btnSubtract_Click(object sender, EventArgs e)
