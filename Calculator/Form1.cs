@@ -19,8 +19,6 @@ namespace Calculator
         public List<int> iList = new List<int>();
         public List<int> iResList = new List<int>();
         public List<char> chList = new List<char>();
-        public List<char> chDoubleCharCheckList = new List<char>();
-        public int intGlobalButtonTracker = 0;
         public Form1()
         {
             //Constructor for form
@@ -87,7 +85,6 @@ namespace Calculator
         private void btnFive_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(5);
-            intGlobalButtonTracker++;
             iList.Add(5);
             rtbTop.Text += button.Numbers;
         }
@@ -156,15 +153,57 @@ namespace Calculator
 
         private void btnEquals_Click(object sender, EventArgs e)
         {
-            //When user clicks equal button, need to capture the last number/s entered. Those #'s are placed in the iResList for calculation 
+            //When user clicks equal button, need to capture the last number/s entered. Those #'s are placed in the iResList for calculation. BUT if user clicks equals when there's a hanging
+            //operator like +, -, *, or / the calculator will delete last character entered and perform normal calculation
+            if ((iList.Count == 0) && (iResList.Count > 0) && (chList.Count > 1))
+            {
+                int intCount = (chList.Count) - 1; // minusing one to get correct index location
+                chList.RemoveAt(intCount);
+
+                //Converting the last iResList number into iList (user's temporary numbers). Need this in case user adds or deletes more numbers
+                int j = (iResList.Count) - 1;//minusing 1 to get correct index
+                //Converting last number in iResList to a string so can go through each character to add each individual to iList
+                string strNewTempList = Convert.ToString(iResList[j]);
+                foreach (char element in strNewTempList)
+                {
+                    string strNewVar = element.ToString();
+                    int intNewTempVar = Convert.ToInt32(strNewVar);
+                    iList.Add(intNewTempVar);
+                }
+                //Removing last number in iResList as just added it to iList
+                iResList.RemoveAt(j);
+            }
+            else if ((iList.Count == 0) && (iResList.Count > 0) && (chList.Count == 1))
+            {
+                int intCount = (chList.Count) - 1; // minusing one to get correct index location
+                chList.RemoveAt(intCount);
+                foreach(int element in iResList)
+                {
+                    rtbTop.Text = element.ToString();
+                    rtbBottom.Text = element.ToString();
+                }
+                //Converting the last iResList number into iList (user's temporary numbers). Need this in case user adds or deletes more numbers
+                int j = (iResList.Count) - 1;//minusing 1 to get correct index
+                //Converting last number in iResList to a string so can go through each character to add each individual to iList
+                string strNewTempList = Convert.ToString(iResList[j]);
+                foreach (char element in strNewTempList)
+                {
+                    string strNewVar = element.ToString();
+                    int intNewTempVar = Convert.ToInt32(strNewVar);
+                    iList.Add(intNewTempVar);
+                }
+                //Removing last number in iResList as just added it to iList
+                iResList.RemoveAt(j);
+            }
+            
             string strNewList = string.Join("", iList);
             int intNewVar = Convert.ToInt32(strNewList);
             iResList.Add(intNewVar);
             int intListTracker = 1, intResult = 0;
-            
+
             foreach (char element in chList)
             {
-  
+
                 if (element == '+')
                 {
                     if (intListTracker == 1)
@@ -218,6 +257,8 @@ namespace Calculator
                     }
                 }
             }
+            
+
             iList.Clear();
             chList.Clear();
             iResList.Clear();
@@ -247,28 +288,23 @@ namespace Calculator
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
+            else if ((iList.Count == 0) && (iResList.Count > 0) && (chList.Count > 0))
+            {
+                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                //Double operators includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                int intCounter = 0;
+                foreach (char element in chList)
+                {
+                    rtbTop.Text += iResList[intCounter].ToString();
+                    rtbTop.Text += " " + element + " ".ToString();
+                    intCounter++;
+                }
+            }
             else // All 3 lists count do not equal 0, resume as normal
             {
-                //Foreach loop prevents user from entering double characters (operators) in a row
-                //try
-                //{
-                //    int intIndexCount = 0;
-                //    foreach (char element in chDoubleCharCheckList)
-                //    {
-                //        if (chDoubleCharCheckList[intIndexCount] == chDoubleCharCheckList[intIndexCount + 1])
-                //        {
-                //            chDoubleCharCheckList.RemoveAt(intIndexCount + 1);
-                //            goto Label;
-                //        }
-                //        intIndexCount++;
-                //    }
-                //}
-                //catch (Exception)
-                //{
-                //    ;
-                //}
-               
-                //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+         
+                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
@@ -289,7 +325,7 @@ namespace Calculator
                     await Task.Delay(60); //Cool trick here
                 }
             }
-        Label:;
+    
         }
 
         private async void btnSubtract_Click(object sender, EventArgs e)
