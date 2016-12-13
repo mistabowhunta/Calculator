@@ -9,14 +9,14 @@ namespace Engine
     public class Buttons
     {
         //Get set stores properties
-        public int Numbers {get;set;}
-        public char Operators { get; set; }
-        public string Strings { get; set; }
+        public decimal Decimals {get;set;}
+        public char Operators { get; set;}
+        public string Strings { get; set;}
         //Setting properties with this class constructor. When creating this object in form class, 
         //it is also passing a parameter, then the parameter gets assigned to the property of Buttons object. 
-        public Buttons (int numbers)
+        public Buttons (decimal decimals)
         {
-            Numbers = numbers;
+            Decimals = decimals;
         }
         public Buttons (char operators)
         {

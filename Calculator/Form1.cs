@@ -13,11 +13,11 @@ namespace Calculator
 {
     public partial class Form1 : Form
     {
-        //MANUALLY ASSIGNING VARIABLEVariable for storing Buttons object and _button name is private b/c won't need it anywhere else
-        //MANUALLY ASSIGNING VARIABLE private Buttons _button;
-        //Creating list to store all user's numbers and characters to perform calculations. Need to make it an object list to accept different dataypes
-        public List<int> iList = new List<int>();
-        public List<int> iResList = new List<int>();
+        //Creating global lists to store all user's numbers and characters to perform calculations
+        //public List<int> iList = new List<int>();
+        public List<decimal> iList = new List<decimal>();
+        //public List<int> iResList = new List<int>();
+        public List<decimal> iResList = new List<decimal>();
         public List<char> chList = new List<char>();
         public Form1()
         {
@@ -26,24 +26,14 @@ namespace Calculator
             
             //Creating/instantiating new Buttons object then passing default value to Buttons Class 
             Buttons button = new Buttons(0);
-            //iList.Add(0);
-            //MANUALLY ASSIGNING VARIABLE Creating/instantiating new Buttons object then assigns it to _button variable
-            //MANUALLY ASSIGNING VARIABLE _button = new Buttons();
-
-            //MANUALLY ASSIGNING VARIABLE Assigning value to _button object
-            //MANUALLY ASSIGNING VARIABLE _button.Numbers = 10;
-            //Getting values of the properties from the button object and assigning to the rich text box on screen
-
+            
             //Setting text alignment for top display to right
             rtbTop.SelectionAlignment = HorizontalAlignment.Right;
             //Setting text alignment for left and right displays to center
             rtbLeft.SelectionAlignment = HorizontalAlignment.Center;
             rtbRight.SelectionAlignment = HorizontalAlignment.Center;
             rtbBottom.SelectionAlignment = HorizontalAlignment.Center;
-            //Setting all displays to default zero value
-            //rtbTop.Text = button.Numbers.ToString();
-            //rtbLeft.Text = button.Numbers.ToString();
-            //rtbRight.Text = button.Numbers.ToString();
+          
         }
        
         //ALL BUTTON EVENTS BELOW
@@ -53,68 +43,68 @@ namespace Calculator
             //Creating new object by passing 0 and adding that number to list in Buttons class
             Buttons button = new Buttons(0);
             iList.Add(0);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
         private void btnOne_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(1);
             iList.Add(1);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
         private void btnTwo_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(2);
             iList.Add(2);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnThree_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(3);
             iList.Add(3);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnFour_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(4);
             iList.Add(4);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnFive_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(5);
             iList.Add(5);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnSix_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(6);
             iList.Add(6);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnSeven_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(7);
             iList.Add(7);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnEight_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(8);
             iList.Add(8);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         private void btnNine_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons(9);
             iList.Add(9);
-            rtbTop.Text += button.Numbers;
+            rtbTop.Text += button.Decimals;
         }
 
         //THESE ARE THE OPERATORS/CHARACTERS
@@ -128,11 +118,7 @@ namespace Calculator
            // rtbRight.Text = "";
 
            // rtbTop.Text += "0.";
-           // rtbLeft.Text += "0" + "\n";
-           // rtbLeft.Text += "." + "\n";
-           // rtbRight.Text += "0" + "\n";
-           // rtbRight.Text += "." + "\n";
-        
+          
             
            //else if(iList.Contains('.'))
            // {
@@ -167,7 +153,7 @@ namespace Calculator
                 foreach (char element in strNewTempList)
                 {
                     string strNewVar = element.ToString();
-                    int intNewTempVar = Convert.ToInt32(strNewVar);
+                    decimal intNewTempVar = Convert.ToDecimal(strNewVar);
                     iList.Add(intNewTempVar);
                 }
                 //Removing last number in iResList as just added it to iList
@@ -177,7 +163,7 @@ namespace Calculator
             {
                 int intCount = (chList.Count) - 1; // minusing one to get correct index location
                 chList.RemoveAt(intCount);
-                foreach(int element in iResList)
+                foreach (int element in iResList)
                 {
                     rtbTop.Text = element.ToString();
                     rtbBottom.Text = element.ToString();
@@ -189,18 +175,24 @@ namespace Calculator
                 foreach (char element in strNewTempList)
                 {
                     string strNewVar = element.ToString();
-                    int intNewTempVar = Convert.ToInt32(strNewVar);
+                    decimal intNewTempVar = Convert.ToDecimal(strNewVar);
                     iList.Add(intNewTempVar);
                 }
                 //Removing last number in iResList as just added it to iList
                 iResList.RemoveAt(j);
             }
-            
             string strNewList = string.Join("", iList);
-            int intNewVar = Convert.ToInt32(strNewList);
+            decimal intNewVar = Convert.ToDecimal(strNewList);
             iResList.Add(intNewVar);
-            int intListTracker = 1, intResult = 0;
+            int intListTracker = 1;
+            decimal decResult = 0;
 
+            if (iResList.Count <= 1)
+            {
+                decResult = iResList[0];
+            }
+            else // iResList count is greater than one
+                
             foreach (char element in chList)
             {
 
@@ -208,12 +200,12 @@ namespace Calculator
                 {
                     if (intListTracker == 1)
                     {
-                        intResult = iResList[0] + iResList[intListTracker];
+                        decResult = iResList[0] + iResList[intListTracker];
                         intListTracker++;
                     }
                     else
                     {
-                        intResult = intResult + iResList[intListTracker];
+                        decResult = decResult + iResList[intListTracker];
                         intListTracker++;
                     }
                 }
@@ -221,12 +213,12 @@ namespace Calculator
                 {
                     if (intListTracker == 1)
                     {
-                        intResult = iResList[0] - iResList[intListTracker];
+                        decResult = iResList[0] - iResList[intListTracker];
                         intListTracker++;
                     }
                     else
                     {
-                        intResult = intResult - iResList[intListTracker];
+                        decResult = decResult - iResList[intListTracker];
                         intListTracker++;
                     }
                 }
@@ -234,12 +226,12 @@ namespace Calculator
                 {
                     if (intListTracker == 1)
                     {
-                        intResult = iResList[0] * iResList[intListTracker];
+                        decResult = iResList[0] * iResList[intListTracker];
                         intListTracker++;
                     }
                     else
                     {
-                        intResult = intResult * iResList[intListTracker];
+                        decResult = decResult * iResList[intListTracker];
                         intListTracker++;
                     }
                 }
@@ -247,39 +239,39 @@ namespace Calculator
                 {
                     if (intListTracker == 1)
                     {
-                        intResult = iResList[0] / iResList[intListTracker];
+                        decResult = iResList[0] / iResList[intListTracker];
                         intListTracker++;
                     }
                     else
                     {
-                        intResult = intResult / iResList[intListTracker];
+                        decResult = decResult / iResList[intListTracker];
                         intListTracker++;
                     }
                 }
+
             }
-            
+
 
             iList.Clear();
             chList.Clear();
             iResList.Clear();
-            rtbTop.Text = intResult.ToString();
-            rtbBottom.Text = intResult.ToString();
-            //Adding intResult to iList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
-            //Converting intResult to a string so can go through each character to add each individual to iList
-            string strTempList= Convert.ToString(intResult);
+            rtbTop.Text = decResult.ToString();
+            rtbBottom.Text = decResult.ToString();
+            //Adding decResult to iList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
+            //Converting decResult to a string so can go through each character to add each individual to iList
+            string strTempList = Convert.ToString(decResult);
             foreach (char element in strTempList)
             {
                 string strNewVar = element.ToString();
-                int intTempInt = Convert.ToInt32(strNewVar);
+                decimal intTempInt = Convert.ToDecimal(strNewVar);
                 iList.Add(intTempInt);
             }
+            
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('+');
-            //intGlobalButtonTracker++;
-            //chDoubleCharCheckList.Insert(intGlobalButtonTracker, button.Operators);
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
@@ -310,10 +302,10 @@ namespace Calculator
                 rtbRight.Text = "";
                 //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
                 string strNewList = string.Join("", iList);
-                int intNewVar = Convert.ToInt32(strNewList);
+                decimal intNewVar = Convert.ToDecimal(strNewList);
                 iResList.Add(intNewVar);
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-                chList.Add('+');
+                chList.Add(button.Operators);
                 //Clearing iList so user can enter the second, third, fourth numbers
                 iList.Clear();
 
@@ -331,39 +323,57 @@ namespace Calculator
         private async void btnSubtract_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('-');
-            //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-            rtbTop.Text += " " + button.Operators + " ";
-            rtbLeft.Text = "";
-            rtbRight.Text = "";
-
-            //If there is nothing in temporary iList, do not need to add any integers to iResList
-            if (iList.Count == 0)
+            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
+            if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
-                chList.Add('-');
+                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
             }
-            else
+            else if ((iList.Count == 0) && (iResList.Count > 0) && (chList.Count > 0))
             {
+                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                //Double operators includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                int intCounter = 0;
+                foreach (char element in chList)
+                {
+                    rtbTop.Text += iResList[intCounter].ToString();
+                    rtbTop.Text += " " + element + " ".ToString();
+                    intCounter++;
+                }
+            }
+            else // All 3 lists count do not equal 0, resume as normal
+            {
+
+                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                rtbTop.Text += " " + button.Operators + " ";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
                 //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
                 string strNewList = string.Join("", iList);
-                int intNewVar = Convert.ToInt32(strNewList);
+                decimal intNewVar = Convert.ToDecimal(strNewList);
                 iResList.Add(intNewVar);
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-                chList.Add('-');
+                chList.Add(button.Operators);
                 //Clearing iList so user can enter the second, third, fourth numbers
                 iList.Clear();
+
+                //Loop that displays operator user clicked on side displays
+                for (int i = 1; i <= 10; i++)
+                {
+                    rtbLeft.Text += button.Operators + "\n";
+                    rtbRight.Text += button.Operators + "\n";
+                    await Task.Delay(60); //Cool trick here
+                }
             }
-          
-            //Loop that displays operator user clicked on side displays
-            for (int i = 1; i <= 10; i++)
-            {
-                rtbLeft.Text += button.Operators + "\n";
-                rtbRight.Text += button.Operators + "\n";
-                await Task.Delay(60); //Cool trick here
-            }
+
         }
 
         private async void btnMultiply_Click(object sender, EventArgs e)
         {
+            Buttons button = new Buttons('*');
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
@@ -372,19 +382,32 @@ namespace Calculator
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
+            else if ((iList.Count == 0) && (iResList.Count > 0) && (chList.Count > 0))
+            {
+                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                //Double operators includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                int intCounter = 0;
+                foreach (char element in chList)
+                {
+                    rtbTop.Text += iResList[intCounter].ToString();
+                    rtbTop.Text += " " + element + " ".ToString();
+                    intCounter++;
+                }
+            }
             else // All 3 lists count do not equal 0, resume as normal
             {
-                Buttons button = new Buttons('*');
-                //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+
+                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
                 //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
                 string strNewList = string.Join("", iList);
-                int intNewVar = Convert.ToInt32(strNewList);
+                decimal intNewVar = Convert.ToDecimal(strNewList);
                 iResList.Add(intNewVar);
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-                chList.Add('*');
+                chList.Add(button.Operators);
                 //Clearing iList so user can enter the second, third, fourth numbers
                 iList.Clear();
 
@@ -396,10 +419,12 @@ namespace Calculator
                     await Task.Delay(60); //Cool trick here
                 }
             }
+
         }
 
         private async void btnDivide_Click(object sender, EventArgs e)
         {
+            Buttons button = new Buttons('/');
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((iList.Count == 0) && (iResList.Count == 0) && (chList.Count == 0))
             {
@@ -408,19 +433,32 @@ namespace Calculator
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
+            else if ((iList.Count == 0) && (iResList.Count > 0) && (chList.Count > 0))
+            {
+                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                //Double operators includes +,*,/. Subtract will turn integer negative
+                rtbTop.Text = "";
+                int intCounter = 0;
+                foreach (char element in chList)
+                {
+                    rtbTop.Text += iResList[intCounter].ToString();
+                    rtbTop.Text += " " + element + " ".ToString();
+                    intCounter++;
+                }
+            }
             else // All 3 lists count do not equal 0, resume as normal
             {
-                Buttons button = new Buttons('/');
-                //Clearing left and right displays then showing only the  operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+
+                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
                 //Joining the integers together then storing users number into iResList (need to do this in case user enters multiple integers ex 124)
                 string strNewList = string.Join("", iList);
-                int intNewVar = Convert.ToInt32(strNewList);
+                decimal intNewVar = Convert.ToDecimal(strNewList);
                 iResList.Add(intNewVar);
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on iResList
-                chList.Add('/');
+                chList.Add(button.Operators);
                 //Clearing iList so user can enter the second, third, fourth numbers
                 iList.Clear();
 
@@ -432,6 +470,7 @@ namespace Calculator
                     await Task.Delay(60); //Cool trick here
                 }
             }
+
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -495,7 +534,7 @@ namespace Calculator
                         foreach (char element in strNewList)
                         {
                             string strNewVar = element.ToString();
-                            int intNewVar = Convert.ToInt32(strNewVar);
+                            decimal intNewVar = Convert.ToDecimal(strNewVar);
                             iList.Add(intNewVar);
                         }
                         //Removing last number in iResList as just added it to iList
@@ -530,7 +569,7 @@ namespace Calculator
                         foreach(char element in strNewList)
                         {
                             string strNewVar = element.ToString();
-                            int intNewVar = Convert.ToInt32(strNewVar);
+                            decimal intNewVar = Convert.ToDecimal(strNewVar);
                             iList.Add(intNewVar);
                         }
                         //Removing last number in iResList as just added it to iList
