@@ -290,15 +290,15 @@ namespace Calculator
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
                 //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                if (stList.Contains("."))
-                {
-                    foreach (string element in stList)
-                    {
-                        decResList.Add(Convert.ToDecimal(element));
-                    }
+                //if (stList.Contains("."))
+                //{
+                //    //foreach (string element in stList)
+                //    //{
+                //        decResList.Add(Convert.ToDecimal(element));
+                //    //}
                     
-                }
-                string strNewList = string.Join("", decList);
+                //}
+                string strNewList = string.Join("", stList); // ISAAC I changed this to stList from decList <<<<<
                 decimal intNewVar = Convert.ToDecimal(strNewList);
                 decResList.Add(intNewVar);
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
