@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Engine;
 
+// Calculator only goes to 5 decimal places and anything more is rounded.
 namespace Calculator
 {
     public partial class Form1 : Form
     {
         //Creating global lists to store all user's numbers and characters to perform calculations
-        //public List<int> decList = new List<int>();
-        public List<decimal> decList = new List<decimal>();
-        //public List<int> decResList = new List<int>();
         public List<decimal> decResList = new List<decimal>();
         public List<char> chList = new List<char>();
         public List<string> stList = new List<string>();
@@ -42,113 +40,228 @@ namespace Calculator
         private void btnZero_Click(object sender, EventArgs e)
         {
             //Creating new object by passing 0 and adding that number to list in Buttons class
-            Buttons button = new Buttons(0);
-            decList.Add(0);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("0");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if(stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("0");
+            rtbTop.Text += button.Strings;
         }
         private void btnOne_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(1);
-            decList.Add(1);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("1");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("1");
+            rtbTop.Text += button.Strings;
         }
         private void btnTwo_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(2);
-            decList.Add(2);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("2");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("2");
+            rtbTop.Text += button.Strings;
         }
 
         private void btnThree_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(3);
-            decList.Add(3);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("3");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("3");
+            rtbTop.Text += button.Strings;
         }
 
         private void btnFour_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(4);
-            decList.Add(4);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("4");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("4");
+            rtbTop.Text += button.Strings;
         }
 
         private void btnFive_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(5);
-            decList.Add(5);
+            Buttons button = new Buttons("5");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
             stList.Add("5");
-            rtbTop.Text += button.Decimals;
+            rtbTop.Text += button.Strings;
         }
 
         private void btnSix_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(6);
-            decList.Add(6);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("6");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("6");
+            rtbTop.Text += button.Strings;
         }
 
         private void btnSeven_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(7);
-            decList.Add(7);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("7");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("7");
+            rtbTop.Text += button.Strings;
         }
 
         private void btnEight_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(8);
-            decList.Add(8);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("8");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("8");
+            rtbTop.Text += button.Strings;
         }
 
         private void btnNine_Click(object sender, EventArgs e)
         {
-            Buttons button = new Buttons(9);
-            decList.Add(9);
-            rtbTop.Text += button.Decimals;
+            Buttons button = new Buttons("9");
+
+            //In case user tried dividing by zero and the display shows zero, removing that zero
+            if (stList.Count == 1)
+            {
+                if (stList[0] == "0")
+                {
+                    rtbTop.Text = "";
+                    stList.RemoveAt(0);
+                }
+            }
+            stList.Add("9");
+            rtbTop.Text += button.Strings;
         }
 
         //THESE ARE THE OPERATORS/CHARACTERS
         private void btnPeriod_Click(object sender, EventArgs e)
         {
+            Buttons button = new Buttons(".");
+            int intTemp = 0; //Temp integer for counting how many periods exist in stList, if greater than 1 then
+
             //In case user wants a decimal number < 1, adding a zero = 0.1 for easy readability
-            if (decList.Count == 0)
+            if (stList.Count == 0)
             {
-                //Clearing top screen and putting "0."
-                rtbTop.Text = "";
                 rtbTop.Text += "0";
             }
-            Buttons button = new Buttons('.');
-            // chList.Add(button.Operators);
-            stList.Add(button.Operators.ToString());
-            rtbTop.Text += button.Operators;
-            
+
+            //If stList (users recently entered numbers) already contains a period then this if statement won't allow the user to enter another period
+            foreach (string element in stList)
+            {
+                if (element == ".")
+                {
+                    intTemp++;
+                }
+            }
+            if (intTemp >= 1) //intTemp >= 1 means there is already a period and don't want user entering more than one period
+            {
+                ; //Do nothing
+            }
+            else //if there are no periods in stList resume as normal
+            {
+                stList.Add(button.Strings);
+                rtbTop.Text += button.Strings;
+            }
         }
 
         private void btnEquals_Click(object sender, EventArgs e)
         {
             //When user clicks equal button, need to capture the last number/s entered. Those #'s are placed in the decResList for calculation. BUT if user clicks equals when there's a hanging
             //operator like +, -, *, or / the calculator will delete last character entered and perform normal calculation
-            if ((decList.Count == 0) && (decResList.Count > 0) && (chList.Count > 1))
+            if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 1))
             {
                 int intCount = (chList.Count) - 1; // minusing one to get correct index location
                 chList.RemoveAt(intCount);
 
-                //Converting the last decResList number into decList (user's temporary numbers). Need this in case user adds or deletes more numbers
+                //Converting the last decResList number into stList (user's temporary numbers). Need this in case user adds or deletes more numbers
                 int j = (decResList.Count) - 1;//minusing 1 to get correct index
-                //Converting last number in decResList to a string so can go through each character to add each individual to decList
+
+                //Converting last number in decResList to a string so can go through each character to add each individual to stList
                 string strNewTempList = Convert.ToString(decResList[j]);
                 foreach (char element in strNewTempList)
                 {
                     string strNewVar = element.ToString();
-                    decimal intNewTempVar = Convert.ToDecimal(strNewVar);
-                    decList.Add(intNewTempVar);
+                    //decimal intNewTempVar = Convert.ToDecimal(strNewVar);
+                    stList.Add(strNewVar);
                 }
-                //Removing last number in decResList as just added it to decList
+
+                //Removing last number in decResList as just added it to stList
                 decResList.RemoveAt(j);
             }
-            else if ((decList.Count == 0) && (decResList.Count > 0) && (chList.Count == 1))
+            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count == 1))
             {
                 int intCount = (chList.Count) - 1; // minusing one to get correct index location
                 chList.RemoveAt(intCount);
@@ -157,25 +270,30 @@ namespace Calculator
                     rtbTop.Text = element.ToString();
                     rtbBottom.Text = element.ToString();
                 }
-                //Converting the last decResList number into decList (user's temporary numbers). Need this in case user adds or deletes more numbers
+
+                //Converting the last decResList number into stList (user's temporary numbers). Need this in case user adds or deletes more numbers
                 int j = (decResList.Count) - 1;//minusing 1 to get correct index
-                //Converting last number in decResList to a string so can go through each character to add each individual to decList
+
+                //Converting last number in decResList to a string so can go through each character to add each individual to stList
                 string strNewTempList = Convert.ToString(decResList[j]);
                 foreach (char element in strNewTempList)
                 {
                     string strNewVar = element.ToString();
-                    decimal intNewTempVar = Convert.ToDecimal(strNewVar);
-                    decList.Add(intNewTempVar);
+
+                    //decimal intNewTempVar = Convert.ToDecimal(strNewVar);
+                    stList.Add(strNewVar);
                 }
-                //Removing last number in decResList as just added it to decList
+
+                //Removing last number in decResList as just added it to stList
                 decResList.RemoveAt(j);
             }
-            string strNewList = string.Join("", stList); // <<<< ISAAC I changed this to stList from decList to try out string calculating
+            string strNewList = string.Join("", stList); // <<<< ISAAC I changed this to stList from stList to try out string calculating
             decimal intNewVar = Convert.ToDecimal(strNewList);
             decResList.Add(intNewVar);
             int intListTracker = 1;
             decimal decResult = 0;
 
+            //If user tries pushing equal when there is only one number to calculate the display will only show that number (no calculation)
             if (decResList.Count <= 1) 
             {
                 decResult = decResList[0];
@@ -226,35 +344,58 @@ namespace Calculator
                 }
                 else if (element == '/')
                 {
+                    // Cannot divide by zero so if user tries, the result will just show 0
                     if (intListTracker == 1)
                     {
-                        decResult = decResList[0] / decResList[intListTracker];
-                        intListTracker++;
+                        //Checking if index 0 in decResList is zero or if the next number being divided by is a zero
+                        if((decResList[0] == 0) || (decResList[intListTracker] == 0))
+                        {
+                            decResult = 0;
+                            intListTracker++;
+                        }
+                        else //Neither number is being divided by zero so proceed as normal
+                        {
+                            decResult = decResList[0] / decResList[intListTracker];
+                            intListTracker++;
+                        }
+                        
                     }
                     else
                     {
-                        decResult = decResult / decResList[intListTracker];
-                        intListTracker++;
+                        //Checking if the next number in decResList is a zero, if so decResult = 0
+                        if (decResList[intListTracker] == 0)
+                        {
+                            decResult = 0;
+                            intListTracker++;
+                        }
+                        else //Neither number is being divided by zero so proceed as normal
+                        {
+                            decResult = decResult / decResList[intListTracker];
+                            intListTracker++;
+                        }
+                        
                     }
                 }
 
             }
-
-
-            //decList.Clear();
-            stList.Clear(); // <<<<<ISAAC delete this if not going stList route
+            stList.Clear(); 
             chList.Clear();
             decResList.Clear();
-            rtbTop.Text = decResult.ToString();
-            rtbBottom.Text = decResult.ToString();
-            //Adding decResult to decList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
-            //Converting decResult to a string so can go through each character to add each individual to decList
+            string strFormatChange;
+            strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
+                                                                               // is there nothing will be entered.
+            rtbTop.Text = strFormatChange.ToString();
+            rtbBottom.Text = strFormatChange.ToString();
+
+            //Adding decResult to stList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
+            //Converting decResult to a string so can go through each character to add each individual to stList
             string strTempList = Convert.ToString(decResult);
             foreach (char element in strTempList)
             {
                 string strNewVar = element.ToString();
-                decimal intTempInt = Convert.ToDecimal(strNewVar);
-                decList.Add(intTempInt);
+
+                //decimal intTempInt = Convert.ToDecimal(strNewVar);
+                stList.Add(strNewVar);
             }
             
         }
@@ -262,15 +403,16 @@ namespace Calculator
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('+');
+
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((decList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
                 rtbTop.Text = "";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
-            else if ((decList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
             {
                 //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
                 //Double operators includes +,*,/. Subtract will turn integer negative
@@ -290,23 +432,16 @@ namespace Calculator
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
-                //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                //if (stList.Contains("."))
-                //{
-                //    //foreach (string element in stList)
-                //    //{
-                //        decResList.Add(Convert.ToDecimal(element));
-                //    //}
-                    
-                //}
-                string strNewList = string.Join("", stList); // ISAAC I changed this to stList from decList <<<<<
+                
+                //Joining all indexes in stList into one then converting that into a decimal for later calculation
+                string strNewList = string.Join("", stList); 
                 decimal intNewVar = Convert.ToDecimal(strNewList);
                 decResList.Add(intNewVar);
+                
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
                 chList.Add(button.Operators);
-                //Clearing decList so user can enter the second, third, fourth numbers
-
-                //decList.Clear();
+               
+                //Clearing stList so user can enter the second, third, fourth numbers
                 stList.Clear();
 
                 //Loop that displays operator user clicked on side displays
@@ -323,15 +458,16 @@ namespace Calculator
         private async void btnSubtract_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('-');
+
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((decList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
                 rtbTop.Text = "";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
-            else if ((decList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
             {
                 //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
                 //Double operators includes +,*,/. Subtract will turn integer negative
@@ -351,14 +487,17 @@ namespace Calculator
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
+
                 //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                string strNewList = string.Join("", decList);
+                string strNewList = string.Join("", stList);
                 decimal intNewVar = Convert.ToDecimal(strNewList);
                 decResList.Add(intNewVar);
+
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
                 chList.Add(button.Operators);
-                //Clearing decList so user can enter the second, third, fourth numbers
-                decList.Clear();
+
+                //Clearing stList so user can enter the second, third, fourth numbers
+                stList.Clear();
 
                 //Loop that displays operator user clicked on side displays
                 for (int i = 1; i <= 10; i++)
@@ -374,15 +513,16 @@ namespace Calculator
         private async void btnMultiply_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('*');
+
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((decList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
                 rtbTop.Text = "";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
-            else if ((decList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
             {
                 //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
                 //Double operators includes +,*,/. Subtract will turn integer negative
@@ -402,14 +542,17 @@ namespace Calculator
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
+
                 //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                string strNewList = string.Join("", decList);
+                string strNewList = string.Join("", stList);
                 decimal intNewVar = Convert.ToDecimal(strNewList);
                 decResList.Add(intNewVar);
+
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
                 chList.Add(button.Operators);
-                //Clearing decList so user can enter the second, third, fourth numbers
-                decList.Clear();
+
+                //Clearing stList so user can enter the second, third, fourth numbers
+                stList.Clear();
 
                 //Loop that displays operator user clicked on side displays
                 for (int i = 1; i <= 10; i++)
@@ -425,15 +568,16 @@ namespace Calculator
         private async void btnDivide_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('/');
+
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((decList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
             {
                 //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
                 rtbTop.Text = "";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
             }
-            else if ((decList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
             {
                 //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
                 //Double operators includes +,*,/. Subtract will turn integer negative
@@ -453,14 +597,17 @@ namespace Calculator
                 rtbTop.Text += " " + button.Operators + " ";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
+
                 //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                string strNewList = string.Join("", decList);
+                string strNewList = string.Join("", stList);
                 decimal intNewVar = Convert.ToDecimal(strNewList);
                 decResList.Add(intNewVar);
+
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
                 chList.Add(button.Operators);
-                //Clearing decList so user can enter the second, third, fourth numbers
-                decList.Clear();
+
+                //Clearing stList so user can enter the second, third, fourth numbers
+                stList.Clear();
 
                 //Loop that displays operator user clicked on side displays
                 for (int i = 1; i <= 10; i++)
@@ -478,18 +625,20 @@ namespace Calculator
 
             if (chList.Count > 0)
             {
-                if (decList.Count > 0)
+                if (stList.Count > 0)
                 {
                     //Finding how many indexes are in numbers list, then deleting the last index
-                    int i = (decList.Count) - 1;//minusing 1 to get correct index
-                    decList.RemoveAt(i);
+                    int i = (stList.Count) - 1;//minusing 1 to get correct index
+                    stList.RemoveAt(i);
+
                     //Clearing screens
                     rtbTop.Text = "";
                     rtbLeft.Text = "";
                     rtbRight.Text = "";
+
                     // Looping through decResList and chList to enter all numbers and characters (operations) user previously entered
                     int intAddCh = 0, intStop = (decResList.Count), intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
-                    foreach (int element in decResList)
+                    foreach (decimal element in decResList)
                     {
                         rtbTop.Text += element.ToString();
                         if (intCurrentIndex == intStop)
@@ -503,41 +652,46 @@ namespace Calculator
                             intCurrentIndex++;
                         }  
                     }
-                    //Looping through decList to display all integers back on display less the integer user wanted removed
-                    foreach (int element in decList)
+
+                    //Looping through stList to display all integers back on display less the integer user wanted removed
+                    foreach (string element in stList)
                     {
                         rtbTop.Text += element.ToString();
                     }
 
                 }
-                else // (decList.Count <= 0)
+                else // (stList.Count <= 0)
                 {
                     //Finding how many indexes are in character list, then deleting the last index
                     int i = (chList.Count) - 1;
                     chList.RemoveAt(i);
-                    //write something
+
+                    //ISAAC make sure I don't need code here *******************
                     if (chList.Count == 0)
                     {
                         //Clearing screen
                         rtbTop.Text = "";
                         rtbLeft.Text = "";
                         rtbRight.Text = "";
+
                         //Redisplaying all numbers user entered 
-                        foreach(int element in decResList)
+                        foreach(decimal element in decResList)
                         {
                             rtbTop.Text += element.ToString();
                         }
-                        //Converting the last decResList number into decList (user's temporary numbers). Need this in case user adds or deletes more numbers
+
+                        //Converting the last decResList number into stList (user's temporary numbers). Need this in case user adds or deletes more numbers
                         int j = (decResList.Count) - 1;//minusing 1 to get correct index
-                        //Converting last number in decResList to a string so can go through each character to add each individual to decList
+
+                        //Converting last number in decResList to a string so can go through each character to add each individual to stList
                         string strNewList = Convert.ToString(decResList[j]);
                         foreach (char element in strNewList)
                         {
                             string strNewVar = element.ToString();
-                            decimal intNewVar = Convert.ToDecimal(strNewVar);
-                            decList.Add(intNewVar);
+                            stList.Add(strNewVar);
                         }
-                        //Removing last number in decResList as just added it to decList
+
+                        //Removing last number in decResList as just added it to stList
                         decResList.RemoveAt(j);
                     }
                     else //(chList.Count > 0)
@@ -546,9 +700,10 @@ namespace Calculator
                         rtbTop.Text = "";
                         rtbLeft.Text = "";
                         rtbRight.Text = "";
+
                         //Redisplaying all numbers in decResList and all characters user previously entered less the last character (operator)
                         int intAddCh = 0, intStop = (decResList.Count) - 1, intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
-                        foreach (int element in decResList)
+                        foreach (decimal element in decResList)
                         {
                             rtbTop.Text += element.ToString();
                             if (intCurrentIndex == intStop)
@@ -562,17 +717,21 @@ namespace Calculator
                                 intCurrentIndex++;
                             }
                         }
-                        //Converting the last decResList number into decList (user's temporary numbers). Need this in case user adds or deletes more numbers
+
+                        //Converting the last decResList number into stList (user's temporary numbers). Need this in case user adds or deletes more numbers
                         int j = (decResList.Count) - 1;//minusing 1 to get correct index
-                        //Converting last number in decResList to a string so can go through each character to add each individual to decList
+
+                        //Converting last number in decResList to a string so can go through each character to add each individual to stList
                         string strNewList = Convert.ToString(decResList[j]);
                         foreach(char element in strNewList)
                         {
                             string strNewVar = element.ToString();
-                            decimal intNewVar = Convert.ToDecimal(strNewVar);
-                            decList.Add(intNewVar);
+
+                            //decimal intNewVar = Convert.ToDecimal(strNewVar);
+                            stList.Add(strNewVar);
                         }
-                        //Removing last number in decResList as just added it to decList
+
+                        //Removing last number in decResList as just added it to stList
                         decResList.RemoveAt(j);
                        
                     }
@@ -580,22 +739,24 @@ namespace Calculator
             } 
             else // if (chList.Count <= 0)
             {
-                if (decList.Count > 0)
+                if (stList.Count > 0)
                 {
                     //Finding how many indexes are in numbers list, then deleting the last index
-                    int i = (decList.Count) - 1;//minusing 1 to get correct index
-                    decList.RemoveAt(i);
+                    int i = (stList.Count) - 1;//minusing 1 to get correct index
+                    stList.RemoveAt(i);
+
                     //Clearing screens
                     rtbTop.Text = "";
                     rtbLeft.Text = "";
                     rtbRight.Text = "";
-                    //Looping through decList to display all integers back on display less the integer user wanted removed
-                    foreach (int element in decList)
+
+                    //Looping through stList to display all integers back on display less the integer user wanted removed
+                    foreach (string element in stList)
                     {
                         rtbTop.Text += element.ToString();
                     }
                 }
-                else // if (decList.Count < = 0)
+                else // if (stList.Count < = 0)
                 {
                     //Clearing screens
                     rtbTop.Text = "";
@@ -607,7 +768,42 @@ namespace Calculator
          
         private void btnNegative_Click(object sender, EventArgs e)
         {
+            //Clearing the screen to insert negative sign
+            rtbTop.Text = "";
 
+            //Inserting negative sign in index 0 meaning at the beginning of the number. Also re-displaying all numbers
+            stList.Insert(0, "-");
+            if (decResList.Count == 0)
+            {
+                foreach (string element in stList)
+                {
+                    rtbTop.Text += element;
+                }
+            }
+            else //decResList > 0
+            {
+                // Looping through decResList and chList to enter all numbers and characters (operations) user previously entered
+                int intAddCh = 0, intStop = (decResList.Count), intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
+                foreach (decimal element in decResList)
+                {
+                    rtbTop.Text += element.ToString();
+                    if (intCurrentIndex == intStop)
+                    {
+                        ; //do nothing here as there are no more characters to add becuase the last number was added to display and chList is empty
+                    }
+                    else //(intCurrentIndex != intStop)
+                    {
+                        rtbTop.Text += " " + chList[intAddCh] + " ";
+                        intAddCh++;
+                        intCurrentIndex++;
+                    }
+                }
+                //Looping through stList to display all integers back on display less the integer user wanted removed
+                foreach (string element in stList)
+                {
+                    rtbTop.Text += element.ToString();
+                }
+            }
         }
 
         private void btnMemory_Click(object sender, EventArgs e)
@@ -627,17 +823,18 @@ namespace Calculator
             rtbTop.Text = "";
             rtbLeft.Text = "";
             rtbRight.Text = "";
+
             //Clearing all lists so user can start fresh
-            decList.Clear();
+            stList.Clear();
             decResList.Clear();
             chList.Clear();
            
         }
-    } //Form1 bracket
-} //namespace bracket
+    } //Form1 end bracket
+} //namespace end bracket
   ///NOTES
 /////Converting entire list into a string then displaying in rich text box
-//      string newList = string.Join("", decList);
+//      string newList = string.Join("", stList);
 //In order to keep adding integers to displays, need to use += NOT just =
 //EXAMPLE of converting a int in list to string, then subtracting one letter in that string, afterwards converting back to int
 //      int i = (decResList.Count) - 1; //minusing 1 to get correct index
@@ -645,3 +842,6 @@ namespace Calculator
 //      int j = (strConvert.Length);
 //      strConvert = strConvert.Remove(j);
 //      decResList[i] = Convert.ToInt32(strConvert);
+
+// BUGS 
+    // After calculate and there are 5 decimal places, then push back button...the display goes crazy
