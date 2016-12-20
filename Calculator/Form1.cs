@@ -18,6 +18,7 @@ namespace Calculator
         public List<decimal> decResList = new List<decimal>();
         public List<char> chList = new List<char>();
         public List<string> stList = new List<string>();
+        public List<string> stMemList = new List<string>(); //stMemList stores everthing the user currently has on display, then clears the display
         public Form1()
         {
             //Constructor for form
@@ -287,7 +288,7 @@ namespace Calculator
                 //Removing last number in decResList as just added it to stList
                 decResList.RemoveAt(j);
             }
-            string strNewList = string.Join("", stList); // <<<< ISAAC I changed this to stList from stList to try out string calculating
+            string strNewList = string.Join("", stList); 
             decimal intNewVar = Convert.ToDecimal(strNewList);
             decResList.Add(intNewVar);
             int intListTracker = 1;
@@ -381,11 +382,8 @@ namespace Calculator
             stList.Clear(); 
             chList.Clear();
             decResList.Clear();
-            string strFormatChange;
-            strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
-                                                                               // is there nothing will be entered.
-            rtbTop.Text = strFormatChange.ToString();
-            rtbBottom.Text = strFormatChange.ToString();
+            rtbTop.Text = decResult.ToString();
+            rtbBottom.Text = decResult.ToString();
 
             //Adding decResult to stList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
             //Converting decResult to a string so can go through each character to add each individual to stList
@@ -808,7 +806,19 @@ namespace Calculator
 
         private void btnMemory_Click(object sender, EventArgs e)
         {
+            //If there is nothing in memory put everything on display in this string list
+            if (stMemList.Count == 0)
+            {
+                //Putting user's temporary string list into decResList so only have to work with one list. I'll need to convert the entire decimal list (decResList) into string
+                if(stList.Count > 0)
+                {
 
+                }
+            }
+            else // stMemList has something stored in it so re-display on both top and bottom screens and clearing side screens
+            {
+
+            }
         }
 
         private void btnClearRecent_Click(object sender, EventArgs e)
@@ -842,6 +852,10 @@ namespace Calculator
 //      int j = (strConvert.Length);
 //      strConvert = strConvert.Remove(j);
 //      decResList[i] = Convert.ToInt32(strConvert);
+
+//strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
+                                                                               // is there nothing will be entered.
+
 
 // BUGS 
     // After calculate and there are 5 decimal places, then push back button...the display goes crazy

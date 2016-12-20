@@ -61,6 +61,7 @@
             this.rtbTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbTop.ForeColor = System.Drawing.Color.Blue;
             this.rtbTop.Location = new System.Drawing.Point(12, 12);
+            this.rtbTop.Multiline = false;
             this.rtbTop.Name = "rtbTop";
             this.rtbTop.ReadOnly = true;
             this.rtbTop.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
