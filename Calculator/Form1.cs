@@ -170,13 +170,13 @@ namespace Calculator
                 //Removing last number in decResList as just added it to decList
                 decResList.RemoveAt(j);
             }
-            string strNewList = string.Join("", decList);
+            string strNewList = string.Join("", stList); // <<<< ISAAC I changed this to stList from decList to try out string calculating
             decimal intNewVar = Convert.ToDecimal(strNewList);
             decResList.Add(intNewVar);
             int intListTracker = 1;
             decimal decResult = 0;
 
-            if (decResList.Count <= 1)
+            if (decResList.Count <= 1) 
             {
                 decResult = decResList[0];
             }
@@ -241,7 +241,8 @@ namespace Calculator
             }
 
 
-            decList.Clear();
+            //decList.Clear();
+            stList.Clear(); // <<<<<ISAAC delete this if not going stList route
             chList.Clear();
             decResList.Clear();
             rtbTop.Text = decResult.ToString();
@@ -304,7 +305,9 @@ namespace Calculator
                 //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
                 chList.Add(button.Operators);
                 //Clearing decList so user can enter the second, third, fourth numbers
-                decList.Clear();
+
+                //decList.Clear();
+                stList.Clear();
 
                 //Loop that displays operator user clicked on side displays
                 for (int i = 1; i <= 10; i++)
