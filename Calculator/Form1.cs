@@ -843,7 +843,7 @@ namespace Calculator
                         stMemList.Add(element.ToString());
                         if (intCurrentIndex == intStop)
                         {
-                            ; //do nothing here as there are no more characters to add because the last number was added to display and chList is empty
+                            ; //do nothing here as there are no more characters to add because the last number was added to display
                         }
                         else //(intCurrentIndex != intStop)
                         {
@@ -897,6 +897,8 @@ namespace Calculator
                         decResList.Add(Convert.ToDecimal(element));
                     }
                 }
+
+
 
                 //Adding last number in decResList into stList and converting to string so user can manipulate if needed
                 int intTempIndex = decResList.Count - 1; //Subtracting one from count to get correct index of last decimal number
@@ -959,3 +961,5 @@ namespace Calculator
 
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
                                                                                // is there nothing will be entered.
+//BUGS
+//      Push Neg button, ???,  than mem error thrown. Neg and ??? then equals error thrown. Nothing entered in display and push equals error thrown
