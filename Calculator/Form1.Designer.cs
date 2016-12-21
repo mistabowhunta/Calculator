@@ -125,12 +125,12 @@
             // btnNegative
             // 
             this.btnNegative.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnNegative.Font = new System.Drawing.Font("Modern No. 20", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNegative.Font = new System.Drawing.Font("Modern No. 20", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNegative.Location = new System.Drawing.Point(243, 75);
             this.btnNegative.Name = "btnNegative";
             this.btnNegative.Size = new System.Drawing.Size(55, 37);
             this.btnNegative.TabIndex = 8;
-            this.btnNegative.Text = "+/-";
+            this.btnNegative.Text = "Neg";
             this.btnNegative.UseVisualStyleBackColor = false;
             this.btnNegative.Click += new System.EventHandler(this.btnNegative_Click);
             // 
@@ -298,7 +298,7 @@
             this.btnClearRecent.Name = "btnClearRecent";
             this.btnClearRecent.Size = new System.Drawing.Size(55, 37);
             this.btnClearRecent.TabIndex = 22;
-            this.btnClearRecent.Text = "CE";
+            this.btnClearRecent.Text = "???";
             this.btnClearRecent.UseVisualStyleBackColor = false;
             this.btnClearRecent.Click += new System.EventHandler(this.btnClearRecent_Click);
             // 

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Engine;
 
-// Calculator only goes to 5 decimal places and anything more is rounded.
 namespace Calculator
 {
     public partial class Form1 : Form
@@ -18,7 +17,7 @@ namespace Calculator
         public List<decimal> decResList = new List<decimal>();
         public List<char> chList = new List<char>();
         public List<string> stList = new List<string>();
-        public List<string> stMemList = new List<string>(); //stMemList stores everthing the user currently has on display, then clears the display
+        public List<string> stMemList = new List<string>(); //stMemList stores everthing the user currently has on display
         public Form1()
         {
             //Constructor for form
@@ -663,8 +662,6 @@ namespace Calculator
                     //Finding how many indexes are in character list, then deleting the last index
                     int i = (chList.Count) - 1;
                     chList.RemoveAt(i);
-
-                    //ISAAC make sure I don't need code here *******************
                     if (chList.Count == 0)
                     {
                         //Clearing screen
@@ -809,21 +806,128 @@ namespace Calculator
             //If there is nothing in memory put everything on display in this string list
             if (stMemList.Count == 0)
             {
-                //Putting user's temporary string list into decResList so only have to work with one list. I'll need to convert the entire decimal list (decResList) into string
+                //Putting user's temporary string list into decResList so only have to work with one list (decResList). I'll need to convert the entire decimal list (decResList) into string
                 if(stList.Count > 0)
                 {
+                    string strNewList = string.Join("", stList);
+                    decimal intNewVar = Convert.ToDecimal(strNewList);
+                    decResList.Add(intNewVar);
 
+                    //Adding all numbers in decResList and all characters user previously entered into stMemList
+                    int intAddCh = 0, intStop = (decResList.Count) - 1, intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
+                    foreach (decimal element in decResList)
+                    {
+                        stMemList.Add(element.ToString());
+                        if (intCurrentIndex == intStop)
+                        {
+                            ; //do nothing here as there are no more characters to add becuase the last number was added to display and chList is empty
+                        }
+                        else //(intCurrentIndex != intStop)
+                        {
+                            stMemList.Add(chList[intAddCh].ToString());
+                            intAddCh++;
+                            intCurrentIndex++;
+                        }
+                    }
+
+                    //No longer need the last number in decResList, only needed that so I could work with one list. User's stList still has the numbers there
+                    int intTempRemove = decResList.Count - 1;
+                    decResList.RemoveAt(intTempRemove);
+                }
+                else //stList.Count == 0 / User did not enter anything into stList (temporary list). Only need to add decResList and any characters
+                {
+                    //Adding all numbers in decResList and all characters user previously entered into stMemList
+                    int intAddCh = 0, intStop = (decResList.Count) - 1, intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
+                    foreach (decimal element in decResList)
+                    {
+                        stMemList.Add(element.ToString());
+                        if (intCurrentIndex == intStop)
+                        {
+                            ; //do nothing here as there are no more characters to add because the last number was added to display and chList is empty
+                        }
+                        else //(intCurrentIndex != intStop)
+                        {
+                            stMemList.Add(chList[intAddCh].ToString());
+                            intAddCh++;
+                            intCurrentIndex++;
+                        }
+                    }
+                    //In case user entered a character (operator) as the last input need to put that into stMemList
+                    if (decResList.Count == chList.Count) // If the count of characters equals count of decResList that means there is a character at the end that needs to be put into stMemList
+                    {
+                        intAddCh = chList.Count - 1;
+                        stMemList.Add(chList[intAddCh].ToString());
+                    }
                 }
             }
-            else // stMemList has something stored in it so re-display on both top and bottom screens and clearing side screens
+            else // stMemList has something stored in it so re-display on top screen and clear side screens
             {
+                //Need to clear all lists and add what user stored in stMemList to those lists
+                stList.Clear();
+                decResList.Clear();
+                chList.Clear();
 
+                //Clearing text from all screens
+                rtbBottom.Text = "";
+                rtbTop.Text = "";
+                rtbLeft.Text = "";
+                rtbRight.Text = "";
+
+                //Adding stMemList to other lists. If foreach loop comes across a character (operator) converting that into a character before adding into chList
+                foreach(string element in stMemList)
+                {
+                    if (element == "+")
+                    {
+                        chList.Add(Convert.ToChar(element));
+                    }
+                    else if (element == "-")
+                    {
+                        chList.Add(Convert.ToChar(element));
+                    }
+                    else if (element == "*")
+                    {
+                        chList.Add(Convert.ToChar(element));
+                    }
+                    else if (element == "/")
+                    {
+                        chList.Add(Convert.ToChar(element));
+                    }
+                    else //Current string element is not a character so it is a decimal that needs to be added to decResList
+                    {
+                        decResList.Add(Convert.ToDecimal(element));
+                    }
+                }
+
+                //Adding last number in decResList into stList and converting to string so user can manipulate if needed
+                int intTempIndex = decResList.Count - 1; //Subtracting one from count to get correct index of last decimal number
+                stList.Add(decResList[intTempIndex].ToString()); //Converting to string
+                decResList.RemoveAt(intTempIndex); //Removing last decimal number because it is now in stList
+
+                //Displaying all numbers and characters user had stored in memory
+
+                //rtbTop.Text += " " + chList[intAddCh] + " ";
             }
         }
 
-        private void btnClearRecent_Click(object sender, EventArgs e)
+        private async void btnClearRecent_Click(object sender, EventArgs e)
         {
+            //Changed this button to a ???. A surprise that shows operators on sides, top, and bottom of displays
 
+            //Clearing all displays first
+            rtbTop.Text = "";
+            rtbLeft.Text = "";
+            rtbRight.Text = "";
+            rtbBottom.Text = "";
+
+            //Loop that displays operator user clicked on side displays
+            for (int i = 1; i <= 10; i++)
+            {
+                rtbLeft.Text += "/\n";
+                rtbRight.Text += "*\n";
+                rtbTop.Text += "   +";
+                rtbBottom.Text += "  -";
+                await Task.Delay(60); //Cool trick here
+            }
         }
 
         private void btnClearAll_Click(object sender, EventArgs e)
@@ -855,7 +959,3 @@ namespace Calculator
 
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
                                                                                // is there nothing will be entered.
-
-
-// BUGS 
-    // After calculate and there are 5 decimal places, then push back button...the display goes crazy
