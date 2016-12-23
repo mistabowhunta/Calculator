@@ -287,114 +287,127 @@ namespace Calculator
                 //Removing last number in decResList as just added it to stList
                 decResList.RemoveAt(j);
             }
-            string strNewList = string.Join("", stList); 
-            decimal intNewVar = Convert.ToDecimal(strNewList);
-            decResList.Add(intNewVar);
-            int intListTracker = 1;
-            decimal decResult = 0;
 
-            //If user tries pushing equal when there is only one number to calculate the display will only show that number (no calculation)
-            if (decResList.Count <= 1) 
+            //In case user clicks equals when there is only a negative sign on display OR user tries clicking equals when last button pressed was ???
+            if ((stList.Count == 0) && (rtbTop.Text != " + + + + + + + + + +"))
             {
-                decResult = decResList[0];
+                ; // Do nothing proceed as normal
             }
-            else // decResList count is greater than one
-                
-            foreach (char element in chList)
+            else if (((stList[0] == "-") && (decResList.Count == 0)) || (rtbTop.Text == " + + + + + + + + + +"))
+            {
+                ; //Do nothing because the user pushed the equals sign when only a negative character was entered or last button pressed was ???
+            }
+            else //resume as normal if there is not only a negative sign on display
             {
 
-                if (element == '+')
-                {
-                    if (intListTracker == 1)
-                    {
-                        decResult = decResList[0] + decResList[intListTracker];
-                        intListTracker++;
-                    }
-                    else
-                    {
-                        decResult = decResult + decResList[intListTracker];
-                        intListTracker++;
-                    }
-                }
-                else if (element == '-')
-                {
-                    if (intListTracker == 1)
-                    {
-                        decResult = decResList[0] - decResList[intListTracker];
-                        intListTracker++;
-                    }
-                    else
-                    {
-                        decResult = decResult - decResList[intListTracker];
-                        intListTracker++;
-                    }
-                }
-                else if (element == '*')
-                {
-                    if (intListTracker == 1)
-                    {
-                        decResult = decResList[0] * decResList[intListTracker];
-                        intListTracker++;
-                    }
-                    else
-                    {
-                        decResult = decResult * decResList[intListTracker];
-                        intListTracker++;
-                    }
-                }
-                else if (element == '/')
-                {
-                    // Cannot divide by zero so if user tries, the result will just show 0
-                    if (intListTracker == 1)
-                    {
-                        //Checking if index 0 in decResList is zero or if the next number being divided by is a zero
-                        if((decResList[0] == 0) || (decResList[intListTracker] == 0))
-                        {
-                            decResult = 0;
-                            intListTracker++;
-                        }
-                        else //Neither number is being divided by zero so proceed as normal
-                        {
-                            decResult = decResList[0] / decResList[intListTracker];
-                            intListTracker++;
-                        }
-                        
-                    }
-                    else
-                    {
-                        //Checking if the next number in decResList is a zero, if so decResult = 0
-                        if (decResList[intListTracker] == 0)
-                        {
-                            decResult = 0;
-                            intListTracker++;
-                        }
-                        else //Neither number is being divided by zero so proceed as normal
-                        {
-                            decResult = decResult / decResList[intListTracker];
-                            intListTracker++;
-                        }
-                        
-                    }
-                }
 
-            }
-            stList.Clear(); 
-            chList.Clear();
-            decResList.Clear();
-            rtbTop.Text = decResult.ToString();
-            rtbBottom.Text = decResult.ToString();
+                string strNewList = string.Join("", stList);
+                decimal intNewVar = Convert.ToDecimal(strNewList);
+                decResList.Add(intNewVar);
+                int intListTracker = 1;
+                decimal decResult = 0;
 
-            //Adding decResult to stList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
-            //Converting decResult to a string so can go through each character to add each individual to stList
-            string strTempList = Convert.ToString(decResult);
-            foreach (char element in strTempList)
-            {
-                string strNewVar = element.ToString();
+                //If user tries pushing equal when there is only one number to calculate the display will only show that number (no calculation)
+                if (decResList.Count <= 1)
+                {
+                    decResult = decResList[0];
+                }
+                else // decResList count is greater than one
+                {
+                    foreach (char element in chList)
+                    {
 
-                //decimal intTempInt = Convert.ToDecimal(strNewVar);
-                stList.Add(strNewVar);
-            }
-            
+                        if (element == '+')
+                        {
+                            if (intListTracker == 1)
+                            {
+                                decResult = decResList[0] + decResList[intListTracker];
+                                intListTracker++;
+                            }
+                            else
+                            {
+                                decResult = decResult + decResList[intListTracker];
+                                intListTracker++;
+                            }
+                        }
+                        else if (element == '-')
+                        {
+                            if (intListTracker == 1)
+                            {
+                                decResult = decResList[0] - decResList[intListTracker];
+                                intListTracker++;
+                            }
+                            else
+                            {
+                                decResult = decResult - decResList[intListTracker];
+                                intListTracker++;
+                            }
+                        }
+                        else if (element == '*')
+                        {
+                            if (intListTracker == 1)
+                            {
+                                decResult = decResList[0] * decResList[intListTracker];
+                                intListTracker++;
+                            }
+                            else
+                            {
+                                decResult = decResult * decResList[intListTracker];
+                                intListTracker++;
+                            }
+                        }
+                        else if (element == '/')
+                        {
+                            // Cannot divide by zero so if user tries, the result will just show 0
+                            if (intListTracker == 1)
+                            {
+                                //Checking if index 0 in decResList is zero or if the next number being divided by is a zero
+                                if ((decResList[0] == 0) || (decResList[intListTracker] == 0))
+                                {
+                                    decResult = 0;
+                                    intListTracker++;
+                                }
+                                else //Neither number is being divided by zero so proceed as normal
+                                {
+                                    decResult = decResList[0] / decResList[intListTracker];
+                                    intListTracker++;
+                                }
+
+                            }
+                            else
+                            {
+                                //Checking if the next number in decResList is a zero, if so decResult = 0
+                                if (decResList[intListTracker] == 0)
+                                {
+                                    decResult = 0;
+                                    intListTracker++;
+                                }
+                                else //Neither number is being divided by zero so proceed as normal
+                                {
+                                    decResult = decResult / decResList[intListTracker];
+                                    intListTracker++;
+                                }
+                            }
+                        }
+                    }
+                }
+                stList.Clear();
+                chList.Clear();
+                decResList.Clear();
+                rtbTop.Text = decResult.ToString();
+                rtbBottom.Text = decResult.ToString();
+
+                //Adding decResult to stList so user can manipulate numbers if needed after press equals sign (if it's only 1 integer variable like "101" user can't change any single integer)
+                //Converting decResult to a string so can go through each character to add each individual to stList
+                string strTempList = Convert.ToString(decResult);
+                foreach (char element in strTempList)
+                {
+                    string strNewVar = element.ToString();
+
+                    //decimal intTempInt = Convert.ToDecimal(strNewVar);
+                    stList.Add(strNewVar);
+                }
+            } 
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
@@ -897,24 +910,54 @@ namespace Calculator
                         decResList.Add(Convert.ToDecimal(element));
                     }
                 }
-
-
-
-                //Adding last number in decResList into stList and converting to string so user can manipulate if needed
-                int intTempIndex = decResList.Count - 1; //Subtracting one from count to get correct index of last decimal number
-                stList.Add(decResList[intTempIndex].ToString()); //Converting to string
-                decResList.RemoveAt(intTempIndex); //Removing last decimal number because it is now in stList
-
-                //Displaying all numbers and characters user had stored in memory
-
-                //rtbTop.Text += " " + chList[intAddCh] + " ";
+                if (chList.Count == 0)
+                {
+                    //Putting last number in decResList to stList so user can manipulate it. There is only one number becuase there is not any characters (operators)
+                    int intTempIndex = decResList.Count - 1; //Subtracting one from count to get correct index of last decimal number
+                    stList.Add(decResList[intTempIndex].ToString()); //Converting to string
+                    decResList.RemoveAt(intTempIndex); //Removing last decimal number because it is now in stList
+                    foreach(string element in stList)
+                    {
+                        rtbTop.Text += element;
+                    }
+                }
+                else //there is atleast one character (operator) in chList 
+                {
+                    //Adding all numbers in decResList and all characters that is in memory to top display
+                    int intAddCh = 0, intStop = (decResList.Count) - 1, intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
+                    foreach (decimal element in decResList)
+                    {
+                        rtbTop.Text += element.ToString();
+                        if (intCurrentIndex == intStop)
+                        {
+                            ; //do nothing here as there are no more characters to add because the last number was added to display
+                        }
+                        else //(intCurrentIndex != intStop)
+                        {
+                            rtbTop.Text += " " + chList[intAddCh] + " ".ToString();
+                            intAddCh++;
+                            intCurrentIndex++;
+                        }
+                    }
+                    //In case user entered a character (operator) as the last input need to display that too
+                    if (decResList.Count == chList.Count) // If the count of characters equals count of decResList that means there is a character at the end that needs to be put into stMemList
+                    {
+                        intAddCh = chList.Count - 1;
+                        rtbTop.Text += " " + chList[intAddCh] + " ".ToString();
+                    }
+                    else //There is not a character as last input so need to convert last number in decResList to string so user can manipulate that number
+                    {
+                        int intTempIndex = decResList.Count - 1; //Subtracting one from count to get correct index of last decimal number
+                        stList.Add(decResList[intTempIndex].ToString()); //Converting to string
+                        decResList.RemoveAt(intTempIndex); //Removing last decimal number because it is now in stList
+                    }               
+                }
             }
         }
 
         private async void btnClearRecent_Click(object sender, EventArgs e)
         {
             //Changed this button to a ???. A surprise that shows operators on sides, top, and bottom of displays
-
             //Clearing all displays first
             rtbTop.Text = "";
             rtbLeft.Text = "";
@@ -934,6 +977,7 @@ namespace Calculator
 
         private void btnClearAll_Click(object sender, EventArgs e)
         {
+
             //Clearing text from all screens and removing all elements in all lists
             rtbBottom.Text = "";
             rtbTop.Text = "";
@@ -962,4 +1006,5 @@ namespace Calculator
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
                                                                                // is there nothing will be entered.
 //BUGS
-//      Push Neg button, ???,  than mem error thrown. Neg and ??? then equals error thrown. Nothing entered in display and push equals error thrown
+//      Push Neg button, ???,  than mem error thrown. Push negative button more than once. Need a way to clear memory if needed
+// 
