@@ -582,7 +582,7 @@ namespace Calculator
             //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
             if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
             {
-                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/
                 rtbTop.Text = "";
                 rtbLeft.Text = "";
                 rtbRight.Text = "";
@@ -590,7 +590,7 @@ namespace Calculator
             else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
             {
                 //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
-                //Double operators includes +,*,/. Subtract will turn integer negative
+                //Double operators includes +,*,/
                 rtbTop.Text = "";
                 int intCounter = 0;
                 foreach (char element in chList)
@@ -776,13 +776,23 @@ namespace Calculator
          
         private void btnNegative_Click(object sender, EventArgs e)
         {
-            //Clearing the screen to insert negative sign
-            rtbTop.Text = "";
-
-            //Inserting negative sign in index 0 meaning at the beginning of the number. Also re-displaying all numbers
-            stList.Insert(0, "-");
-            if (decResList.Count == 0)
+            bool boolNegExists;
+            foreach (string element in stList)
             {
+
+            }
+            //In case user tries pushing negative button more than once
+            if ((decResList.Count >= 0) && (stList.Count > 0) && (stList[0] == "-"))
+            {
+                ; //Do nothing as a negative sign already exists. Can't have more than one negative sign
+            }
+            else if (decResList.Count == 0)
+            {
+                //Clearing the screen to insert negative sign
+                rtbTop.Text = "";
+
+                //Inserting negative sign in index 0 meaning at the beginning of the number. Also re-displaying all numbers
+                stList.Insert(0, "-");
                 foreach (string element in stList)
                 {
                     rtbTop.Text += element;
@@ -790,6 +800,12 @@ namespace Calculator
             }
             else //decResList > 0
             {
+                //Clearing the screen to insert negative sign
+                rtbTop.Text = "";
+
+                //Inserting negative sign in index 0 meaning at the beginning of the number. Also re-displaying all numbers
+                stList.Insert(0, "-");
+
                 // Looping through decResList and chList to enter all numbers and characters (operations) user previously entered
                 int intAddCh = 0, intStop = (decResList.Count), intCurrentIndex = 0; //intStop tells loop to stop adding characters to display as none need to be added after last # in decResList
                 foreach (decimal element in decResList)
@@ -865,7 +881,7 @@ namespace Calculator
                             intCurrentIndex++;
                         }
                     }
-                    //In case user entered a character (operator) as the last input need to put that into stMemList
+                    //In case user entered a character (operator) as the last input need to put that into stMemList 
                     if (decResList.Count == chList.Count) // If the count of characters equals count of decResList that means there is a character at the end that needs to be put into stMemList
                     {
                         intAddCh = chList.Count - 1;
@@ -1006,5 +1022,5 @@ namespace Calculator
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
                                                                                // is there nothing will be entered.
 //BUGS
-//      Push Neg button, ???,  than mem error thrown. Push negative button more than once. Need a way to clear memory if needed
-// 
+//     Need a way to clear memory if needed. When push negative then a character error thrown. Push negative after clicking memory button, adds 2 negatives. After
+//      pushing ???, then memory, error thrown. Before this can be complete need to add error handling for overloading decimal capacity.
