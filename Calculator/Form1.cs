@@ -23,7 +23,7 @@ namespace Calculator
         {
             //Constructor for form
             InitializeComponent();
-            
+
             //Creating/instantiating new Buttons object then passing default value to Buttons Class 
             Buttons button = new Buttons(0);
 
@@ -31,9 +31,9 @@ namespace Calculator
             btnMemory.MouseHover += btnMemory_MouseHover;
 
             //Clears stMemList if the user double clicks btnMemory button
-            btnMemory.MouseDown += new MouseEventHandler (btnMemory_MouseDown);
+            btnMemory.MouseDown += new MouseEventHandler(btnMemory_MouseDown);
             btnMemory.MouseUp += new MouseEventHandler(btnMemory_MouseUp);
-            
+
             //Setting text alignment for top display to right
             rtbTop.SelectionAlignment = HorizontalAlignment.Right;
 
@@ -41,18 +41,18 @@ namespace Calculator
             rtbLeft.SelectionAlignment = HorizontalAlignment.Center;
             rtbRight.SelectionAlignment = HorizontalAlignment.Center;
             rtbBottom.SelectionAlignment = HorizontalAlignment.Center;
-          
+
         }
-       
+
         //ALL BUTTON EVENTS BELOW
-            //THESE ARE THE NUMBERS
+        //THESE ARE THE NUMBERS
         private void btnZero_Click(object sender, EventArgs e)
         {
             //Creating new object by passing 0 and adding that number to list in Buttons class
             Buttons button = new Buttons("0");
 
             //In case user tried dividing by zero and the display shows zero, removing that zero
-            if(stList.Count == 1)
+            if (stList.Count == 1)
             {
                 if (stList[0] == "0")
                 {
@@ -323,81 +323,93 @@ namespace Calculator
                 }
                 else // decResList count is greater than one
                 {
-                    foreach (char element in chList)
+                    //Checking result does not overflow decimal variable. If overflow detected, messagebox will popup displaying oex message
+                    try
                     {
+                        checked
+                        {
+                            foreach (char element in chList)
+                            {
 
-                        if (element == '+')
-                        {
-                            if (intListTracker == 1)
-                            {
-                                decResult = decResList[0] + decResList[intListTracker];
-                                intListTracker++;
-                            }
-                            else
-                            {
-                                decResult = decResult + decResList[intListTracker];
-                                intListTracker++;
-                            }
-                        }
-                        else if (element == '-')
-                        {
-                            if (intListTracker == 1)
-                            {
-                                decResult = decResList[0] - decResList[intListTracker];
-                                intListTracker++;
-                            }
-                            else
-                            {
-                                decResult = decResult - decResList[intListTracker];
-                                intListTracker++;
-                            }
-                        }
-                        else if (element == '*')
-                        {
-                            if (intListTracker == 1)
-                            {
-                                decResult = decResList[0] * decResList[intListTracker];
-                                intListTracker++;
-                            }
-                            else
-                            {
-                                decResult = decResult * decResList[intListTracker];
-                                intListTracker++;
-                            }
-                        }
-                        else if (element == '/')
-                        {
-                            // Cannot divide by zero so if user tries, the result will just show 0
-                            if (intListTracker == 1)
-                            {
-                                //Checking if index 0 in decResList is zero or if the next number being divided by is a zero
-                                if ((decResList[0] == 0) || (decResList[intListTracker] == 0))
+                                if (element == '+')
                                 {
-                                    decResult = 0;
-                                    intListTracker++;
+                                    if (intListTracker == 1)
+                                    {
+                                        decResult = decResList[0] + decResList[intListTracker];
+                                        intListTracker++;
+                                    }
+                                    else
+                                    {
+                                        decResult = decResult + decResList[intListTracker];
+                                        intListTracker++;
+                                    }
                                 }
-                                else //Neither number is being divided by zero so proceed as normal
+                                else if (element == '-')
                                 {
-                                    decResult = decResList[0] / decResList[intListTracker];
-                                    intListTracker++;
+                                    if (intListTracker == 1)
+                                    {
+                                        decResult = decResList[0] - decResList[intListTracker];
+                                        intListTracker++;
+                                    }
+                                    else
+                                    {
+                                        decResult = decResult - decResList[intListTracker];
+                                        intListTracker++;
+                                    }
                                 }
+                                else if (element == '*')
+                                {
+                                    if (intListTracker == 1)
+                                    {
+                                        decResult = decResList[0] * decResList[intListTracker];
+                                        intListTracker++;
+                                    }
+                                    else
+                                    {
+                                        decResult = decResult * decResList[intListTracker];
+                                        intListTracker++;
+                                    }
+                                }
+                                else if (element == '/')
+                                {
+                                    // Cannot divide by zero so if user tries, the result will just show 0
+                                    if (intListTracker == 1)
+                                    {
+                                        //Checking if index 0 in decResList is zero or if the next number being divided by is a zero
+                                        if ((decResList[0] == 0) || (decResList[intListTracker] == 0))
+                                        {
+                                            decResult = 0;
+                                            intListTracker++;
+                                        }
+                                        else //Neither number is being divided by zero so proceed as normal
+                                        {
+                                            decResult = decResList[0] / decResList[intListTracker];
+                                            intListTracker++;
+                                        }
 
-                            }
-                            else
-                            {
-                                //Checking if the next number in decResList is a zero, if so decResult = 0
-                                if (decResList[intListTracker] == 0)
-                                {
-                                    decResult = 0;
-                                    intListTracker++;
-                                }
-                                else //Neither number is being divided by zero so proceed as normal
-                                {
-                                    decResult = decResult / decResList[intListTracker];
-                                    intListTracker++;
+                                    }
+                                    else
+                                    {
+                                        //Checking if the next number in decResList is a zero, if so decResult = 0
+                                        if (decResList[intListTracker] == 0)
+                                        {
+                                            decResult = 0;
+                                            intListTracker++;
+                                        }
+                                        else //Neither number is being divided by zero so proceed as normal
+                                        {
+                                            decResult = decResult / decResList[intListTracker];
+                                            intListTracker++;
+                                        }
+                                    }
                                 }
                             }
                         }
+                    }
+                    catch (OverflowException oex)
+                    {
+                        stList.Clear();
+                        MessageBox.Show(oex.Message);
                     }
                 }
                 stList.Clear();
@@ -416,125 +428,148 @@ namespace Calculator
                     //decimal intTempInt = Convert.ToDecimal(strNewVar);
                     stList.Add(strNewVar);
                 }
-            } 
+            }
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('+');
 
-            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            //Catching if decimal dataype is overflowed
+            try
             {
-                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
-                rtbTop.Text = "";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-            }
-            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
-            {
-                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
-                //Double operators includes +,*,/. Subtract will turn integer negative
-                rtbTop.Text = "";
-                int intCounter = 0;
-                foreach (char element in chList)
+                checked
                 {
-                    rtbTop.Text += decResList[intCounter].ToString();
-                    rtbTop.Text += " " + element + " ".ToString();
-                    intCounter++;
+                    //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
+                    if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+                    {
+                        //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                        rtbTop.Text = "";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+                    }
+                    else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+                    {
+                        //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                        //Double operators includes +,*,/. Subtract will turn integer negative
+                        rtbTop.Text = "";
+                        int intCounter = 0;
+                        foreach (char element in chList)
+                        {
+                            rtbTop.Text += decResList[intCounter].ToString();
+                            rtbTop.Text += " " + element + " ".ToString();
+                            intCounter++;
+                        }
+                    }
+                    else if ((stList.Count == 1) && (stList[0] == "-"))
+                    {
+                        ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
+                    }
+                    else // All 3 lists count do not equal 0, resume as normal
+                    {
+
+                        //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                        rtbTop.Text += " " + button.Operators + " ";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+
+                        //Joining all indexes in stList into one then converting that into a decimal for later calculation
+                        string strNewList = string.Join("", stList);
+                        decimal intNewVar = Convert.ToDecimal(strNewList);
+                        decResList.Add(intNewVar);
+
+                        //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
+                        chList.Add(button.Operators);
+
+                        //Clearing stList so user can enter the second, third, fourth numbers
+                        stList.Clear();
+
+                        //Loop that displays operator user clicked on side displays
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            rtbLeft.Text += button.Operators + "\n";
+                            rtbRight.Text += button.Operators + "\n";
+                            await Task.Delay(60); //Cool trick here
+                        }
+                    }
                 }
             }
-            else if ((stList.Count == 1) && (stList[0] == "-"))
+            catch (OverflowException oex)
             {
-                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
-            }
-            else // All 3 lists count do not equal 0, resume as normal
-            {
-         
-                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-                rtbTop.Text += " " + button.Operators + " ";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-                
-                //Joining all indexes in stList into one then converting that into a decimal for later calculation
-                string strNewList = string.Join("", stList); 
-                decimal intNewVar = Convert.ToDecimal(strNewList);
-                decResList.Add(intNewVar);
-                
-                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
-                chList.Add(button.Operators);
-               
-                //Clearing stList so user can enter the second, third, fourth numbers
                 stList.Clear();
-
-                //Loop that displays operator user clicked on side displays
-                for (int i = 1; i <= 10; i++)
-                {
-                    rtbLeft.Text += button.Operators + "\n";
-                    rtbRight.Text += button.Operators + "\n";
-                    await Task.Delay(60); //Cool trick here
-                }
+                rtbTop.Text = "";
+                MessageBox.Show(oex.Message);
             }
-    
         }
-
         private async void btnSubtract_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('-');
 
-            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            //Catching if decimal dataype is overflowed
+            try
             {
-                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
-                rtbTop.Text = "";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-            }
-            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
-            {
-                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
-                //Double operators includes +,*,/. Subtract will turn integer negative
-                rtbTop.Text = "";
-                int intCounter = 0;
-                foreach (char element in chList)
+                checked
                 {
-                    rtbTop.Text += decResList[intCounter].ToString();
-                    rtbTop.Text += " " + element + " ".ToString();
-                    intCounter++;
+                    //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
+                    if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+                    {
+                        //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                        rtbTop.Text = "";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+                    }
+                    else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+                    {
+                        //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                        //Double operators includes +,*,/. Subtract will turn integer negative
+                        rtbTop.Text = "";
+                        int intCounter = 0;
+                        foreach (char element in chList)
+                        {
+                            rtbTop.Text += decResList[intCounter].ToString();
+                            rtbTop.Text += " " + element + " ".ToString();
+                            intCounter++;
+                        }
+                    }
+                    else if ((stList.Count == 1) && (stList[0] == "-"))
+                    {
+                        ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
+                    }
+                    else // All 3 lists count do not equal 0, resume as normal
+                    {
+
+                        //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                        rtbTop.Text += " " + button.Operators + " ";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+
+                        //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
+                        string strNewList = string.Join("", stList);
+                        decimal intNewVar = Convert.ToDecimal(strNewList);
+                        decResList.Add(intNewVar);
+
+                        //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
+                        chList.Add(button.Operators);
+
+                        //Clearing stList so user can enter the second, third, fourth numbers
+                        stList.Clear();
+
+                        //Loop that displays operator user clicked on side displays
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            rtbLeft.Text += button.Operators + "\n";
+                            rtbRight.Text += button.Operators + "\n";
+                            await Task.Delay(60); //Cool trick here
+                        }
+                    }
                 }
             }
-            else if ((stList.Count == 1) && (stList[0] == "-"))
+            catch (OverflowException oex)
             {
-                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
-            }
-            else // All 3 lists count do not equal 0, resume as normal
-            {
-
-                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-                rtbTop.Text += " " + button.Operators + " ";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-
-                //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                string strNewList = string.Join("", stList);
-                decimal intNewVar = Convert.ToDecimal(strNewList);
-                decResList.Add(intNewVar);
-
-                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
-                chList.Add(button.Operators);
-
-                //Clearing stList so user can enter the second, third, fourth numbers
                 stList.Clear();
-
-                //Loop that displays operator user clicked on side displays
-                for (int i = 1; i <= 10; i++)
-                {
-                    rtbLeft.Text += button.Operators + "\n";
-                    rtbRight.Text += button.Operators + "\n";
-                    await Task.Delay(60); //Cool trick here
-                }
+                rtbTop.Text = "";
+                MessageBox.Show(oex.Message);
             }
-
         }
 
         private async void btnMultiply_Click(object sender, EventArgs e)
@@ -654,7 +689,6 @@ namespace Calculator
             }
 
         }
-
         private void btnBack_Click(object sender, EventArgs e)
         {
 
@@ -858,7 +892,7 @@ namespace Calculator
         {
             //Tells user to hold the memory button to clear memory
             ToolTip ToolTip1 = new ToolTip();
-            ToolTip1.SetToolTip(btnMemory, "Hold to clear memory");
+            ToolTip1.SetToolTip(btnMemory, "Hold for 2 seconds and release to clear memory");
         }
         private void btnMemory_MouseDown(object sender, MouseEventArgs e)
         {
@@ -883,13 +917,18 @@ namespace Calculator
         }
         private void btnMemory_Click(object sender, EventArgs e)
         {
-            //btnMemory.MouseHover += "Hold to clear memory";
             //If there is nothing in memory put everything on display in this string list
             if (stMemList.Count == 0)
             {
                 //Putting user's temporary string list into decResList so only have to work with one list (decResList). I'll need to convert the entire decimal list (decResList) into string
-                if(stList.Count > 0)
+                if (stList.Count > 0)
                 {
+                    if ((stList.Count == 1) && (stList[0] == "-"))
+                    {
+                        ; //Do nothing becuase if there is only a negative sign do not need to put that into memory
+                    }
+                    else // There is not only a negative sign so resume as normal
+                    {
                     string strNewList = string.Join("", stList);
                     decimal intNewVar = Convert.ToDecimal(strNewList);
                     decResList.Add(intNewVar);
@@ -914,6 +953,7 @@ namespace Calculator
                     //No longer need the last number in decResList, only needed that so I could work with one list. User's stList still has the numbers there
                     int intTempRemove = decResList.Count - 1;
                     decResList.RemoveAt(intTempRemove);
+                    }
                 }
                 else //stList.Count == 0 / User did not enter anything into stList (temporary list). Only need to add decResList and any characters
                 {
@@ -1081,5 +1121,5 @@ namespace Calculator
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
                                                                                // is there nothing will be entered.
 //BUGS
-//     Can't remove negative sign once clicked. Push mem button after clicking only neg button, error thrown. After
-//      pushing neg, then memory, error thrown. Before this can be complete need to add error handling for overloading decimal capacity.
+//     Can't remove negative sign once clicked.
+//      Before this can be complete need to add error handling for overloading decimal capacity.
