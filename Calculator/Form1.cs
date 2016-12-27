@@ -18,6 +18,7 @@ namespace Calculator
         public List<char> chList = new List<char>();
         public List<string> stList = new List<string>();
         public List<string> stMemList = new List<string>(); //stMemList stores everthing the user currently has on display
+        public DateTime dateMouseDownTime;
         public Form1()
         {
             //Constructor for form
@@ -25,9 +26,17 @@ namespace Calculator
             
             //Creating/instantiating new Buttons object then passing default value to Buttons Class 
             Buttons button = new Buttons(0);
+
+            //Telling ToolTips to popout a message when user hovers over memory button telling the user to double-click button to clear memory
+            btnMemory.MouseHover += btnMemory_MouseHover;
+
+            //Clears stMemList if the user double clicks btnMemory button
+            btnMemory.MouseDown += new MouseEventHandler (btnMemory_MouseDown);
+            btnMemory.MouseUp += new MouseEventHandler(btnMemory_MouseUp);
             
             //Setting text alignment for top display to right
             rtbTop.SelectionAlignment = HorizontalAlignment.Right;
+
             //Setting text alignment for left and right displays to center
             rtbLeft.SelectionAlignment = HorizontalAlignment.Center;
             rtbRight.SelectionAlignment = HorizontalAlignment.Center;
@@ -435,6 +444,10 @@ namespace Calculator
                     intCounter++;
                 }
             }
+            else if ((stList.Count == 1) && (stList[0] == "-"))
+            {
+                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
+            }
             else // All 3 lists count do not equal 0, resume as normal
             {
          
@@ -489,6 +502,10 @@ namespace Calculator
                     rtbTop.Text += " " + element + " ".ToString();
                     intCounter++;
                 }
+            }
+            else if ((stList.Count == 1) && (stList[0] == "-"))
+            {
+                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
             }
             else // All 3 lists count do not equal 0, resume as normal
             {
@@ -545,6 +562,10 @@ namespace Calculator
                     intCounter++;
                 }
             }
+            else if ((stList.Count == 1) && (stList[0] == "-"))
+            {
+                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
+            }
             else // All 3 lists count do not equal 0, resume as normal
             {
 
@@ -599,6 +620,10 @@ namespace Calculator
                     rtbTop.Text += " " + element + " ".ToString();
                     intCounter++;
                 }
+            }
+            else if ((stList.Count == 1) && (stList[0] == "-"))
+            {
+                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
             }
             else // All 3 lists count do not equal 0, resume as normal
             {
@@ -776,13 +801,13 @@ namespace Calculator
          
         private void btnNegative_Click(object sender, EventArgs e)
         {
-            bool boolNegExists;
-            foreach (string element in stList)
-            {
+            //bool boolNegExists;
+            //foreach (string element in stList)
+            //{
 
-            }
+            //}
             //In case user tries pushing negative button more than once
-            if ((decResList.Count >= 0) && (stList.Count > 0) && (stList[0] == "-"))
+            if ((stList.Count > 0) && (stList[0].Contains("-")))
             {
                 ; //Do nothing as a negative sign already exists. Can't have more than one negative sign
             }
@@ -829,9 +854,36 @@ namespace Calculator
                 }
             }
         }
-
+        private void btnMemory_MouseHover(object sender, EventArgs e)
+        {
+            //Tells user to hold the memory button to clear memory
+            ToolTip ToolTip1 = new ToolTip();
+            ToolTip1.SetToolTip(btnMemory, "Hold to clear memory");
+        }
+        private void btnMemory_MouseDown(object sender, MouseEventArgs e)
+        {
+            //Capturing the current time when the user presses the mem button down and if the button is held down for longer than 1.5 seconds, the memory list is cleared
+            dateMouseDownTime = DateTime.Now;
+        }
+        private async void btnMemory_MouseUp(object sender, MouseEventArgs e)
+        {
+            //Capturing the current time when the user presses the mem button down and if the button is held down for longer than 1.5 seconds, the memory list is cleared
+            var clickDuration = DateTime.Now - dateMouseDownTime;
+            if(clickDuration > TimeSpan.FromSeconds(1.5))
+            {
+                stMemList.Clear();
+                rtbTop.Text = "***Memory Cleared***";
+                await Task.Delay(800);
+                rtbTop.Text = "";
+            }
+            else //Normal button click so do nothing and resume as normal
+            {
+                ; //Do nothing, resume as normal
+            }
+        }
         private void btnMemory_Click(object sender, EventArgs e)
         {
+            //btnMemory.MouseHover += "Hold to clear memory";
             //If there is nothing in memory put everything on display in this string list
             if (stMemList.Count == 0)
             {
@@ -885,7 +937,14 @@ namespace Calculator
                     if (decResList.Count == chList.Count) // If the count of characters equals count of decResList that means there is a character at the end that needs to be put into stMemList
                     {
                         intAddCh = chList.Count - 1;
-                        stMemList.Add(chList[intAddCh].ToString());
+                        if (chList.Count == 0)
+                        {
+                            ; // Do nothing as user clicked ??? button, not capturing that into memory
+                        }
+                        else
+                        {
+                            stMemList.Add(chList[intAddCh].ToString());
+                        }
                     }
                 }
             }
@@ -1022,5 +1081,5 @@ namespace Calculator
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
                                                                                // is there nothing will be entered.
 //BUGS
-//     Need a way to clear memory if needed. When push negative then a character error thrown. Push negative after clicking memory button, adds 2 negatives. After
-//      pushing ???, then memory, error thrown. Before this can be complete need to add error handling for overloading decimal capacity.
+//     Can't remove negative sign once clicked. Push mem button after clicking only neg button, error thrown. After
+//      pushing neg, then memory, error thrown. Before this can be complete need to add error handling for overloading decimal capacity.
