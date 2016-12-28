@@ -47,7 +47,7 @@
             this.btnEight = new System.Windows.Forms.Button();
             this.btnNine = new System.Windows.Forms.Button();
             this.btnMemory = new System.Windows.Forms.Button();
-            this.btnClearRecent = new System.Windows.Forms.Button();
+            this.btnQuestion = new System.Windows.Forms.Button();
             this.btnClearAll = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnDivide = new System.Windows.Forms.Button();
@@ -290,17 +290,17 @@
             this.btnMemory.UseVisualStyleBackColor = false;
             this.btnMemory.Click += new System.EventHandler(this.btnMemory_Click);
             // 
-            // btnClearRecent
+            // btnQuestion
             // 
-            this.btnClearRecent.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnClearRecent.Font = new System.Drawing.Font("Modern No. 20", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearRecent.Location = new System.Drawing.Point(121, 75);
-            this.btnClearRecent.Name = "btnClearRecent";
-            this.btnClearRecent.Size = new System.Drawing.Size(55, 37);
-            this.btnClearRecent.TabIndex = 22;
-            this.btnClearRecent.Text = "???";
-            this.btnClearRecent.UseVisualStyleBackColor = false;
-            this.btnClearRecent.Click += new System.EventHandler(this.btnClearRecent_Click);
+            this.btnQuestion.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnQuestion.Font = new System.Drawing.Font("Modern No. 20", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuestion.Location = new System.Drawing.Point(121, 75);
+            this.btnQuestion.Name = "btnQuestion";
+            this.btnQuestion.Size = new System.Drawing.Size(55, 37);
+            this.btnQuestion.TabIndex = 22;
+            this.btnQuestion.Text = "???";
+            this.btnQuestion.UseVisualStyleBackColor = false;
+            this.btnQuestion.Click += new System.EventHandler(this.btnQuestion_Click);
             // 
             // btnClearAll
             // 
@@ -376,7 +376,7 @@
             this.Controls.Add(this.btnDivide);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnClearAll);
-            this.Controls.Add(this.btnClearRecent);
+            this.Controls.Add(this.btnQuestion);
             this.Controls.Add(this.btnMemory);
             this.Controls.Add(this.btnNine);
             this.Controls.Add(this.btnEight);
@@ -424,7 +424,7 @@
         private System.Windows.Forms.Button btnEight;
         private System.Windows.Forms.Button btnNine;
         private System.Windows.Forms.Button btnMemory;
-        private System.Windows.Forms.Button btnClearRecent;
+        private System.Windows.Forms.Button btnQuestion;
         private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnDivide;

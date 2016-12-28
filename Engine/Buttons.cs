@@ -26,10 +26,5 @@ namespace Engine
         {
             Strings = strings;
         }
-   
-        //public char Period { get; set; }
-        //public char Equal { get; set; }
-        //public char Add { get; set; }
-        //public char Subtract { get; set; }
     }
 }

@@ -1,4 +1,25 @@
-﻿using System;
+﻿//Created on Dec 27, 2016
+//@author: Isaac Nason
+//The MIT License(MIT)
+//Copyright(c) [2015]
+//[Isaac Nason]
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//The above copyright notice and this permission notice shall be included in all
+//copies or substantial portions of the Software.
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//SOFTWARE.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +44,10 @@ namespace Calculator
         {
             //Constructor for form
             InitializeComponent();
+            KeyPreview = true; //Allows use of keyboard
+
+            //Creating instance of using keyboard
+            this.KeyDown += new KeyEventHandler(LinkingKeypad);
 
             //Creating/instantiating new Buttons object then passing default value to Buttons Class 
             Buttons button = new Buttons(0);
@@ -43,7 +68,79 @@ namespace Calculator
             rtbBottom.SelectionAlignment = HorizontalAlignment.Center;
 
         }
-
+        private void LinkingKeypad(object sender, KeyEventArgs e)
+        {
+            //Numpad and keypad numbers activate corresponding method
+            if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
+            {
+                btnZero_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D1 || e.KeyCode == Keys.NumPad1)
+            {
+                btnOne_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D2 || e.KeyCode == Keys.NumPad2)
+            {
+                btnTwo_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D3 || e.KeyCode == Keys.NumPad3)
+            {
+                btnThree_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D4 || e.KeyCode == Keys.NumPad4)
+            {
+                btnFour_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D5 || e.KeyCode == Keys.NumPad5)
+            {
+                btnFive_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D6 || e.KeyCode == Keys.NumPad6)
+            {
+                btnSix_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D7 || e.KeyCode == Keys.NumPad7)
+            {
+                btnSeven_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D8 || e.KeyCode == Keys.NumPad8)
+            {
+                btnEight_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.D9 || e.KeyCode == Keys.NumPad9)
+            {
+                btnNine_Click(sender, e);
+            }
+            //operators
+            else if (e.KeyCode == Keys.Back)
+            {
+                btnBack_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Add)
+            {
+                btnAdd_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Subtract)
+            {
+                btnSubtract_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Multiply)
+            {
+                btnMultiply_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Divide)
+            {
+                btnDivide_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Decimal)
+            {
+                btnPeriod_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                btnEquals_Click(sender, e);
+            }
+        }
         //ALL BUTTON EVENTS BELOW
         //THESE ARE THE NUMBERS
         private void btnZero_Click(object sender, EventArgs e)
@@ -308,16 +405,32 @@ namespace Calculator
             }
             else //resume as normal if there is not only a negative sign on display
             {
+                //Checking if decimal dataype is overflowed
+                try
+                {
+                    checked
+                    {
 
-
-                string strNewList = string.Join("", stList);
-                decimal intNewVar = Convert.ToDecimal(strNewList);
-                decResList.Add(intNewVar);
+                        string strNewList = string.Join("", stList);
+                        decimal intNewVar = Convert.ToDecimal(strNewList);
+                        decResList.Add(intNewVar);
+                    }
+                }
+                catch (OverflowException oex)
+                {
+                    stList.Clear();
+                    rtbTop.Text = "";
+                    MessageBox.Show(oex.Message);
+                }
                 int intListTracker = 1;
                 decimal decResult = 0;
 
                 //If user tries pushing equal when there is only one number to calculate the display will only show that number (no calculation)
-                if (decResList.Count <= 1)
+                if (decResList.Count == 0)
+                {
+                    ; // Do nothing. If code gets to this point, that means the user overflowed the decimal datatype and needs to re-enter number. Try Catch above cleared stList and display
+                }
+                else if (decResList.Count == 1)
                 {
                     decResult = decResList[0];
                 }
@@ -409,6 +522,7 @@ namespace Calculator
                     catch (OverflowException oex)
                     {
                         stList.Clear();
+                        rtbTop.Text = "";
                         MessageBox.Show(oex.Message);
                     }
                 }
@@ -430,7 +544,6 @@ namespace Calculator
                 }
             }
         }
-
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('+');
@@ -571,123 +684,145 @@ namespace Calculator
                 MessageBox.Show(oex.Message);
             }
         }
-
         private async void btnMultiply_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('*');
 
-            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            //Catching if decimal dataype is overflowed
+            try
             {
-                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
-                rtbTop.Text = "";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-            }
-            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
-            {
-                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
-                //Double operators includes +,*,/. Subtract will turn integer negative
-                rtbTop.Text = "";
-                int intCounter = 0;
-                foreach (char element in chList)
+                checked
                 {
-                    rtbTop.Text += decResList[intCounter].ToString();
-                    rtbTop.Text += " " + element + " ".ToString();
-                    intCounter++;
+                    //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
+                    if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+                    {
+                        //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/. Subtract will turn integer negative
+                        rtbTop.Text = "";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+                    }
+                    else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+                    {
+                        //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                        //Double operators includes +,*,/. Subtract will turn integer negative
+                        rtbTop.Text = "";
+                        int intCounter = 0;
+                        foreach (char element in chList)
+                        {
+                            rtbTop.Text += decResList[intCounter].ToString();
+                            rtbTop.Text += " " + element + " ".ToString();
+                            intCounter++;
+                        }
+                    }
+                    else if ((stList.Count == 1) && (stList[0] == "-"))
+                    {
+                        ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
+                    }
+                    else // All 3 lists count do not equal 0, resume as normal
+                    {
+
+                        //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                        rtbTop.Text += " " + button.Operators + " ";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+
+                        //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
+                        string strNewList = string.Join("", stList);
+                        decimal intNewVar = Convert.ToDecimal(strNewList);
+                        decResList.Add(intNewVar);
+
+                        //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
+                        chList.Add(button.Operators);
+
+                        //Clearing stList so user can enter the second, third, fourth numbers
+                        stList.Clear();
+
+                        //Loop that displays operator user clicked on side displays
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            rtbLeft.Text += button.Operators + "\n";
+                            rtbRight.Text += button.Operators + "\n";
+                            await Task.Delay(60); //Cool trick here
+                        }
+                    }
                 }
             }
-            else if ((stList.Count == 1) && (stList[0] == "-"))
+            catch (OverflowException oex)
             {
-                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
-            }
-            else // All 3 lists count do not equal 0, resume as normal
-            {
-
-                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-                rtbTop.Text += " " + button.Operators + " ";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-
-                //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                string strNewList = string.Join("", stList);
-                decimal intNewVar = Convert.ToDecimal(strNewList);
-                decResList.Add(intNewVar);
-
-                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
-                chList.Add(button.Operators);
-
-                //Clearing stList so user can enter the second, third, fourth numbers
                 stList.Clear();
-
-                //Loop that displays operator user clicked on side displays
-                for (int i = 1; i <= 10; i++)
-                {
-                    rtbLeft.Text += button.Operators + "\n";
-                    rtbRight.Text += button.Operators + "\n";
-                    await Task.Delay(60); //Cool trick here
-                }
+                rtbTop.Text = "";
+                MessageBox.Show(oex.Message);
             }
-
         }
-
         private async void btnDivide_Click(object sender, EventArgs e)
         {
             Buttons button = new Buttons('/');
 
-            //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
-            if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+            //Catching if decimal dataype is overflowed
+            try
             {
-                //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/
-                rtbTop.Text = "";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-            }
-            else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
-            {
-                //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
-                //Double operators includes +,*,/
-                rtbTop.Text = "";
-                int intCounter = 0;
-                foreach (char element in chList)
+                checked
                 {
-                    rtbTop.Text += decResList[intCounter].ToString();
-                    rtbTop.Text += " " + element + " ".ToString();
-                    intCounter++;
+                    //Need to add numbers before operator otherwise this if statement will enter nothing until user selects a number
+                    if ((stList.Count == 0) && (decResList.Count == 0) && (chList.Count == 0))
+                    {
+                        //Clearing screens as all 3 lists count = 0 meaning an operator cannot be entered without integers before it. Includes +,*,/
+                        rtbTop.Text = "";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+                    }
+                    else if ((stList.Count == 0) && (decResList.Count > 0) && (chList.Count > 0))
+                    {
+                        //Clearing screens and re-displaying all users previously entered information as the user cannot enter double operators in middle of calculations.
+                        //Double operators includes +,*,/
+                        rtbTop.Text = "";
+                        int intCounter = 0;
+                        foreach (char element in chList)
+                        {
+                            rtbTop.Text += decResList[intCounter].ToString();
+                            rtbTop.Text += " " + element + " ".ToString();
+                            intCounter++;
+                        }
+                    }
+                    else if ((stList.Count == 1) && (stList[0] == "-"))
+                    {
+                        ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
+                    }
+                    else // All 3 lists count do not equal 0, resume as normal
+                    {
+
+                        //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
+                        rtbTop.Text += " " + button.Operators + " ";
+                        rtbLeft.Text = "";
+                        rtbRight.Text = "";
+
+                        //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
+                        string strNewList = string.Join("", stList);
+                        decimal intNewVar = Convert.ToDecimal(strNewList);
+                        decResList.Add(intNewVar);
+
+                        //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
+                        chList.Add(button.Operators);
+
+                        //Clearing stList so user can enter the second, third, fourth numbers
+                        stList.Clear();
+
+                        //Loop that displays operator user clicked on side displays
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            rtbLeft.Text += button.Operators + "\n";
+                            rtbRight.Text += button.Operators + "\n";
+                            await Task.Delay(60); //Cool trick here
+                        }
+                    }
                 }
             }
-            else if ((stList.Count == 1) && (stList[0] == "-"))
+            catch (OverflowException oex)
             {
-                ; //Do nothing because cannot only have a negative sign. Need a number to calculate otherwise an error will be thrown
-            }
-            else // All 3 lists count do not equal 0, resume as normal
-            {
-
-                //Clearing left and right displays then showing only the operator in both displays. Cool trick to use ASYNC and AWAIT to pause the for loop iteration while form still running
-                rtbTop.Text += " " + button.Operators + " ";
-                rtbLeft.Text = "";
-                rtbRight.Text = "";
-
-                //Joining the integers together then storing users number into decResList (need to do this in case user enters multiple integers ex 124)
-                string strNewList = string.Join("", stList);
-                decimal intNewVar = Convert.ToDecimal(strNewList);
-                decResList.Add(intNewVar);
-
-                //Adding operator to chList so can perform calculation when user clicks equals. The algorithm in equals button keeps track of what operation to perform on decResList
-                chList.Add(button.Operators);
-
-                //Clearing stList so user can enter the second, third, fourth numbers
                 stList.Clear();
-
-                //Loop that displays operator user clicked on side displays
-                for (int i = 1; i <= 10; i++)
-                {
-                    rtbLeft.Text += button.Operators + "\n";
-                    rtbRight.Text += button.Operators + "\n";
-                    await Task.Delay(60); //Cool trick here
-                }
+                rtbTop.Text = "";
+                MessageBox.Show(oex.Message);
             }
-
         }
         private void btnBack_Click(object sender, EventArgs e)
         {
@@ -800,7 +935,6 @@ namespace Calculator
 
                         //Removing last number in decResList as just added it to stList
                         decResList.RemoveAt(j);
-                       
                     }
                 }
             } 
@@ -835,11 +969,6 @@ namespace Calculator
          
         private void btnNegative_Click(object sender, EventArgs e)
         {
-            //bool boolNegExists;
-            //foreach (string element in stList)
-            //{
-
-            //}
             //In case user tries pushing negative button more than once
             if ((stList.Count > 0) && (stList[0].Contains("-")))
             {
@@ -1070,7 +1199,7 @@ namespace Calculator
             }
         }
 
-        private async void btnClearRecent_Click(object sender, EventArgs e)
+        private async void btnQuestion_Click(object sender, EventArgs e)
         {
             //Changed this button to a ???. A surprise that shows operators on sides, top, and bottom of displays
             //Clearing all displays first
@@ -1107,6 +1236,7 @@ namespace Calculator
         }
     } //Form1 end bracket
 } //namespace end bracket
+
   ///NOTES
 /////Converting entire list into a string then displaying in rich text box
 //      string newList = string.Join("", stList);
@@ -1122,4 +1252,4 @@ namespace Calculator
                                                                                // is there nothing will be entered.
 //BUGS
 //     Can't remove negative sign once clicked.
-//      Before this can be complete need to add error handling for overloading decimal capacity.
+
