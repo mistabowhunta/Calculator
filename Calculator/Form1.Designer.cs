@@ -1,4 +1,6 @@
-﻿namespace Calculator
+﻿using System.Windows.Forms;
+
+namespace Calculator
 {
     partial class Form1
     {
@@ -19,6 +21,17 @@
             }
             base.Dispose(disposing);
         }
+        //Need to override KeyDown event handlers even if KeyPreview is true because they cannot see enter, escape, arrow buttons
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                //btnEquals_Click(sender, e);
+                btnEquals.PerformClick();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         #region Windows Form Designer generated code
 
@@ -28,6 +41,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.rtbTop = new System.Windows.Forms.RichTextBox();
             this.rtbRight = new System.Windows.Forms.RichTextBox();
             this.rtbLeft = new System.Windows.Forms.RichTextBox();
@@ -397,6 +411,7 @@
             this.Controls.Add(this.rtbRight);
             this.Controls.Add(this.rtbTop);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculator";

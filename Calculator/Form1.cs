@@ -47,7 +47,7 @@ namespace Calculator
             KeyPreview = true; //Allows use of keyboard
 
             //Creating instance of using keyboard
-            this.KeyDown += new KeyEventHandler(LinkingKeypad);
+            KeyDown += new KeyEventHandler(LinkingKeypad);
 
             //Creating/instantiating new Buttons object then passing default value to Buttons Class 
             Buttons button = new Buttons(0);
@@ -71,74 +71,87 @@ namespace Calculator
         private void LinkingKeypad(object sender, KeyEventArgs e)
         {
             //Numpad and keypad numbers activate corresponding method
+            // Enter key is handled in the form level because key preview and key handlers cannot see all key - escape, enter, arrow keys. In form level they are excecuted first
             if (e.KeyCode == Keys.D0 || e.KeyCode == Keys.NumPad0)
             {
+                e.SuppressKeyPress = true; //disables the beep sound when key pressed
                 btnZero_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D1 || e.KeyCode == Keys.NumPad1)
             {
+                e.SuppressKeyPress = true;
                 btnOne_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D2 || e.KeyCode == Keys.NumPad2)
             {
+                e.SuppressKeyPress = true;
                 btnTwo_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D3 || e.KeyCode == Keys.NumPad3)
             {
+                e.SuppressKeyPress = true;
                 btnThree_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D4 || e.KeyCode == Keys.NumPad4)
             {
+                e.SuppressKeyPress = true;
                 btnFour_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D5 || e.KeyCode == Keys.NumPad5)
             {
+                e.SuppressKeyPress = true;
                 btnFive_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D6 || e.KeyCode == Keys.NumPad6)
             {
+                e.SuppressKeyPress = true;
                 btnSix_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D7 || e.KeyCode == Keys.NumPad7)
             {
+                e.SuppressKeyPress = true;
                 btnSeven_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D8 || e.KeyCode == Keys.NumPad8)
             {
+                e.SuppressKeyPress = true;
                 btnEight_Click(sender, e);
             }
             else if (e.KeyCode == Keys.D9 || e.KeyCode == Keys.NumPad9)
             {
+                e.SuppressKeyPress = true;
                 btnNine_Click(sender, e);
             }
             //operators
             else if (e.KeyCode == Keys.Back)
             {
+                e.SuppressKeyPress = true;
                 btnBack_Click(sender, e);
             }
             else if (e.KeyCode == Keys.Add)
             {
+                e.SuppressKeyPress = true;
                 btnAdd_Click(sender, e);
             }
             else if (e.KeyCode == Keys.Subtract)
             {
+                e.SuppressKeyPress = true;
                 btnSubtract_Click(sender, e);
             }
             else if (e.KeyCode == Keys.Multiply)
             {
+                e.SuppressKeyPress = true;
                 btnMultiply_Click(sender, e);
             }
             else if (e.KeyCode == Keys.Divide)
             {
+                e.SuppressKeyPress = true;
                 btnDivide_Click(sender, e);
             }
             else if (e.KeyCode == Keys.Decimal)
             {
+                e.SuppressKeyPress = true;
                 btnPeriod_Click(sender, e);
-            }
-            else if (e.KeyCode == Keys.Enter)
-            {
-                btnEquals_Click(sender, e);
             }
         }
         //ALL BUTTON EVENTS BELOW
@@ -1237,7 +1250,7 @@ namespace Calculator
     } //Form1 end bracket
 } //namespace end bracket
 
-  ///NOTES
+///NOTES
 /////Converting entire list into a string then displaying in rich text box
 //      string newList = string.Join("", stList);
 //In order to keep adding integers to displays, need to use += NOT just =
@@ -1249,7 +1262,16 @@ namespace Calculator
 //      decResList[i] = Convert.ToInt32(strConvert);
 
 //strFormatChange = String.Format("{0:#,###0.#####}", decResult); //String formatting: 0's are a placeholder if nothing is there a zero will be entered. # is a placeholder, if nothing
-                                                                               // is there nothing will be entered.
+// is there nothing will be entered.
+
+// // Enter key is handled in the form level because key preview and key handlers cannot see all keys - escape, enter, arrow keys. In form level they are excecuted first
+//KeyDown handlers do not see all keys.Specifically, "you can't see the kind of keystrokes that are used for navigation. Like 
+//the cursor keys and Tab, Escape and Enter for a dialog."
+//There are a few different ways to intercept key events, and they all happen in sequence.KeyDown is handled last. Hence, KeyPreview isn't
+//much of a preview, and the event could be silenced at a few stops on the way.
+//Need to override ProcessCmdKey at the Form level. That way, all keys are visible to the method, and the method is first in line to see the event.
+
+
 //BUGS
 //     Can't remove negative sign once clicked.
 
